@@ -1,0 +1,11 @@
+a.out
+*.o
+*.a*
+
+.dSYM
+*.o
+.*.sw*
+
+/printfTester
+.DS_STORE
+.vs_code
