@@ -13,27 +13,44 @@ NAME	= minishell
 LIBFT	= libft/libft.a
 
 CC	= gcc
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g
 INCLUDE	= -L libft -lft
+READLINE_FLAGS = -lreadline -I /usr/include/readline
 
 all:	$(NAME)
 
+%.o: %.c
+	@printf "\033[KCompiling $<\r"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME): $(OBJS)
-	cd libft && $(MAKE)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCLUDE)
+	@make -s -C libft/
+	@make -s -C printf/
+	@for file in $(SRCS); do \
+		printf "\033[KCompiling $$file\r"; \
+		$(CC) $(CFLAGS) -c $$file -o $$file.o -I. -I./libft -I./printf -I/usr/include/readline; \
+	done
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCLUDE) $(READLINE_FLAGS)
+	@echo "\033[1;32mMinishell: successful compilation\033[0m 🎇"
 
 clean:
-	rm -f $(OBJS) $(B_OBJS)
-	cd libft && $(MAKE) clean
+	@for file in $(OBJS); do \
+		printf "\033[KRemoving $$file\r"; \
+		rm -f $$file; \
+	done
+	@rm -f $(OBJS) $(B_OBJS)
+	@make -s clean -C libft/
+	@make -s clean -C printf/
+	@echo "\033[1;36m===>Minishell: .o correctly cleaned\033[0m"
 
 fclean: clean
-	rm -f $(NAME) $(BONUS)
-	cd libft && $(MAKE) fclean
-
+	@printf "\033[KRemoving $(NAME)\r"
+	@rm -f $(NAME) $(BONUS)
+	@rm -f ./libft/libft.a
+	@rm -f ./libft/libftprintf.a
+	@echo "\033[1;36m===>Minishell: .a correctly cleaned\033[0m"
+	
 re: fclean all
-
-%.o: %.c
-	$(CC) $(FLAGS) -c $<  -o $(<:.c=.o)
 
 
 .PHONY:	clean fclean re bonus

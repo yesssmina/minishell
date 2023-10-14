@@ -15,6 +15,12 @@
 # include <signal.h>
 # include <dirent.h>
 
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+
+
 # include "libft/libft.h"
 
 typedef	struct	s_data
@@ -81,6 +87,7 @@ void			sig_exec_init(void);
 void			sig_init(void);
 
 void			error_sentence(char *str, int status);
+void			error_sentence_exec(char *input, int status);
 void			handle_exit(char **inputs, t_data *data);
 
 int				get_next_line(int fd, char **line);

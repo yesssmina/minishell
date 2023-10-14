@@ -26,7 +26,7 @@ void	data_init(t_data *data, char **env)
 int		main(int ac, char **av, char **env)
 {
 	t_data	data;
-    int		gnl;
+	char	*user_input;
 
 	(void)ac;
 	(void)av;
@@ -35,17 +35,15 @@ int		main(int ac, char **av, char **env)
 	g_user_input = NULL;
 	if (!data.env)
 		exit(EXIT_FAILURE);
-	while (1)
+
+	while ((user_input = readline("minishell> ")))
 	{
-		g_quit = 0;
-		free(g_user_input);
-		sig_init();
-		ft_putstr_fd("minishell> ", 2);
-		gnl = get_next_line(0, &g_user_input);
-		if (!gnl)
-			end_of_file(&data, g_user_input);
-		else
-			parser_start(g_user_input, &data);
+		if (user_input && *user_input)
+		{
+			add_history(user_input); // Ajoute l'entree à l'historique
+			parser_start(user_input, &data);
+			//free(user_input);
+		}
 	}
 	return (0);
 }

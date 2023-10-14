@@ -39,6 +39,7 @@ int		execute(char **inputs, t_data *data)
 		if (!execute_2(inputs, data))
 			return (0);
 	}
+	error_sentence_exec(inputs[0], 127);
 	return (1);
 }
 
@@ -48,8 +49,8 @@ void	handle_exec(char **inputs, t_data *data)
 	int		status;
 
 	status = 0;
-	if (!check_exec(inputs, data))
-		return (error_sentence("\t\tminishell: Unknown command\n", 127));
+	//if (!check_exec(inputs, data))
+	//	return (error_sentence("\t\tminishell: Unknown command\n", 127));
 	pid = fork();
 	if (pid == 0)
 	{
