@@ -114,6 +114,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 void	handle_redir(char **input, int i, t_data *data)
 {
 	char	*str;
+	int		null_fd;
 
 	str = *input;
 	if (str[i] == '>' && str[i + 1] != '>')
@@ -122,4 +123,12 @@ void	handle_redir(char **input, int i, t_data *data)
 		redir_to_append(str, i, input, data);
 	else if (str[i] == '<' && str[i + 1] != '<')
 		redir_from(str, i, input, data);
+	else if (str[i] == '<' && str[i + 1] == '<')
+	{
+		redir_delimiter(input, i, data);
+		null_fd = open("/dev/null", O_WRONLY);
+		dup2(null_fd, STDERR_FILENO);
+  		close(null_fd);
+	}
 }
+//gerer erreur poubelle

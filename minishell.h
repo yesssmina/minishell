@@ -30,6 +30,17 @@ typedef	struct	s_data
 	int			fd_out;
 	char		*pwd;
 	int			redir;
+
+	char	*str;
+	char	*delimiter;
+	int		j;
+	int		k;
+	char	*temp_file;
+	int		fd;
+	char	*input_line;
+	int		file_contents_length;
+	char	*arg_error;
+
 }				t_data;
 
 extern char			*g_user_input;
@@ -74,6 +85,7 @@ int				parser_error(char *str);
 void			parser_variable(char **input_address, int *i, t_data *data);
 int				parser_redir(char **input_address, t_data *data);
 void			handle_redir(char **input_address, int i, t_data *data);
+void			redir_delimiter(char **input, int i, t_data *data); //remove
 void			remove_redir_input(char **input_address, int i, int j);
 int				get_name_len(char *str);
 char			*get_filename(char *str, int *j);

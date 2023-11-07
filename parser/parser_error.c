@@ -10,7 +10,7 @@ int		error_redir(char *str, int *i, char c)
 		count++;
 		(*i)++;
 	}
-	if ((c == '>' && count > 2) || (c == '<' && count > 1))
+	if ((c == '>' && count > 2) || (c == '<' && count > 2))
 		return (1);
 	while (str[(*i)] == ' ')
 		(*i)++;
