@@ -40,6 +40,8 @@ typedef	struct	s_data
 	char	*input_line;
 	int		file_contents_length;
 	char	*arg_error;
+	char	*file_contents;
+	char	*temp;
 
 }				t_data;
 
