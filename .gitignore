@@ -9,3 +9,4 @@ a.out
 /printfTester
 .DS_STORE
 .vs_code
+venv/*
