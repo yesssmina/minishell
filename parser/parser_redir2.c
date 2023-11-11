@@ -125,10 +125,10 @@ void	handle_redir(char **input, int i, t_data *data)
 		redir_from(str, i, input, data);
 	else if (str[i] == '<' && str[i + 1] == '<')
 	{
-		redir_delimiter(input, i, data);
 		null_fd = open("/dev/null", O_WRONLY);
 		dup2(null_fd, STDERR_FILENO);
   		close(null_fd);
+		redir_delimiter(input, i, data);
 	}
 }
 //gerer erreur poubelle

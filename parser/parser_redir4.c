@@ -32,12 +32,12 @@ void	relir_delim_error(t_data *data)
 		i++;
 	while (data->str[i] != ' ' && data->str[i] != '\0')
 		i++;
-	if (data->str[i] != '\0')
-	{
-		i++;
-		while (data->str[i] != ' ' && data->str[i] != '\0')
-			i++;
-	}
+	//if (data->str[i] != '\0')
+	//{
+	//	i++;
+	//	while (data->str[i] != ' ' && data->str[i] != '\0')
+	//		i++;
+	//}
 	relir_delim_error2(data, i);
 }
 
@@ -75,8 +75,8 @@ void	redir_delimiter2(t_data *data)
 void	init_redir_data(t_data *data, char **input, int i)
 {
 	data->str = ft_strdup(*input);
-	data->temp_file = "temp_here_document.txt";
-	data->fd = open(data->temp_file, O_RDONLY);
+	data->temp_file = "./temp_here_document.txt";
+	data->fd = open(data->temp_file, O_CREAT | O_RDONLY, 0644);
 	data->j = 0;
 	i += 2;
 	data->k = 0;
@@ -94,7 +94,6 @@ void	init_redir_data(t_data *data, char **input, int i)
 			break ;
 	}
 	data->delimiter[data->j] = '\0';
-	dup2(data->fd, 0);
 	close(data->fd);
 }
 
@@ -106,4 +105,9 @@ void	redir_delimiter(char **input, int i, t_data *data)
 	relir_delim_error(data);
 	free(data->file_contents);
 	free(data->delimiter);
+	if (unlink(data->temp_file) != 0)
+	{
+		perror("Error\ndeleting here doc");
+		exit(EXIT_FAILURE);
+	}
 }
