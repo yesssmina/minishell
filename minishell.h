@@ -87,7 +87,7 @@ int				parser_error(char *str);
 void			parser_variable(char **input_address, int *i, t_data *data);
 int				parser_redir(char **input_address, t_data *data);
 void			handle_redir(char **input_address, int i, t_data *data);
-void			redir_delimiter(char **input, int i, t_data *data); //remove
+void			redir_delimiter(char *str, char **input, int i, t_data *data); //remove
 void			remove_redir_input(char **input_address, int i, int j);
 int				get_name_len(char *str);
 char			*get_filename(char *str, int *j);

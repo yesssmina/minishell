@@ -97,12 +97,19 @@ void	init_redir_data(t_data *data, char **input, int i)
 	close(data->fd);
 }
 
-void	redir_delimiter(char **input, int i, t_data *data)
+void	redir_delimiter(char *str, char **input, int i, t_data *data)
 {
+	int		j;
+
+	j = i;
 	init_redir_data(data, input, i);
+
+	if (str[j + 1] == ' ')
+		j++;
+	remove_redir_input(input, i, j);
 	redir_delimiter2(data);
 	write(1, data->file_contents, data->file_contents_length);
-	relir_delim_error(data);
+	//relir_delim_error(data);
 	free(data->file_contents);
 	free(data->delimiter);
 	if (unlink(data->temp_file) != 0)
