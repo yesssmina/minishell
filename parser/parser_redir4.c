@@ -1,46 +1,5 @@
 #include "../minishell.h"
 
-void	relir_delim_error2(t_data *data, int i)
-{
-	while (data->str[i])
-	{
-		data->arg_error = NULL;
-		data->j = 0;
-		while (data->str[i] == ' ')
-			i++;
-		data->k = i;
-		while (data->str[data->k] != ' ' && data->str[data->k] != '\0')
-			data->k++;
-		data->arg_error = malloc(sizeof(char) * (data->k + 1));
-		while (data->str[i] != ' ' && data->str[i] != '\0')
-			data->arg_error[data->j++] = data->str[i++];
-		data->arg_error[data->j] = '\0';
-		printf("cat: %s: No such file or directory\n", data->arg_error);
-		free(data->arg_error);
-	}
-}
-
-void	relir_delim_error(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->str[i] != '<')
-		i++;
-	i = i + 2;
-	while (data->str[i] == ' ')
-		i++;
-	while (data->str[i] != ' ' && data->str[i] != '\0')
-		i++;
-	//if (data->str[i] != '\0')
-	//{
-	//	i++;
-	//	while (data->str[i] != ' ' && data->str[i] != '\0')
-	//		i++;
-	//}
-	relir_delim_error2(data, i);
-}
-
 void	redir_delimiter2(t_data *data)
 {
 	while (1)
@@ -91,7 +50,7 @@ void	init_redir_data(t_data *data, char **input, int i)
 	{
 		data->delimiter[data->j++] = data->str[i++];
 		if (data->str[i] == ' ')
-			break ;
+			return ;
 	}
 	data->delimiter[data->j] = '\0';
 	close(data->fd);
@@ -101,15 +60,15 @@ void	redir_delimiter(char *str, char **input, int i, t_data *data)
 {
 	int		j;
 
-	j = i;
 	init_redir_data(data, input, i);
-
-	if (str[j + 1] == ' ')
+	j = i + 2;
+	while (str[j] == ' ')
+		j++;
+	while (str[j] != ' ' && str[j] != '\0')
 		j++;
 	remove_redir_input(input, i, j);
 	redir_delimiter2(data);
 	write(1, data->file_contents, data->file_contents_length);
-	//relir_delim_error(data);
 	free(data->file_contents);
 	free(data->delimiter);
 	if (unlink(data->temp_file) != 0)
@@ -117,4 +76,5 @@ void	redir_delimiter(char *str, char **input, int i, t_data *data)
 		perror("Error\ndeleting here doc");
 		exit(EXIT_FAILURE);
 	}
+	parser_redir(input, data);
 }

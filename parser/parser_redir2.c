@@ -127,4 +127,3 @@ void	handle_redir(char **input, int i, t_data *data)
 		redir_delimiter(str, input, i, data);
 	}
 }
-//gerer erreur poubelle
