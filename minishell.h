@@ -43,11 +43,15 @@ typedef	struct	s_data
 	char	*file_contents;
 	char	*temp;
 
+	char	*new_command;
+	char	*old_command;
+	int		length;
+	char	*delimiter_start;
+	char	*delimiter_end;
+	int		i_memory;
 }				t_data;
 
-extern char			*g_user_input;
 extern int			g_status;
-extern int			g_quit;
 
 int				envlen(char **env);
 void			free_env(char **env);
@@ -109,5 +113,7 @@ int				create_line(char **str, char **line);
 int				check_nl(char *str);
 int				last_line(char **str, char **line);
 int				mega_error(char *str1, char *str2);
+
+void			redir_from(char *str, int i, char **input, t_data *data);
 
 #endif

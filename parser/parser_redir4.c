@@ -1,80 +1,84 @@
 #include "../minishell.h"
 
-void	redir_delimiter2(t_data *data)
+void	modify_command_for_heredoc(char **input, int heredoc_pos, char *temp_filename, t_data *data)
 {
-	while (1)
+	data->old_command = *input;
+	while (data->old_command[heredoc_pos] && data->old_command[heredoc_pos] != '<')
+		heredoc_pos++;
+	heredoc_pos += 2;
+	while (data->old_command[heredoc_pos] && data->old_command[heredoc_pos] == ' ')
+		heredoc_pos++;
+	data->delimiter_start = &data->old_command[heredoc_pos];
+	while (*data->delimiter_start == ' ')
+		data->delimiter_start++;
+	data->delimiter_end = data->delimiter_start;
+	while (*data->delimiter_end && *data->delimiter_end != ' ' && *data->delimiter_end != '<'
+		&& *data->delimiter_end != '>')
+		data->delimiter_end++;
+	data->length = heredoc_pos + ft_strlen(temp_filename) + ft_strlen(data->delimiter_end) + 1;
+	data->new_command = (char *)malloc(data->length);
+	if (!data->new_command)
 	{
-		data->input_line = readline(">");
-		if (data->input_line == NULL)
-			break ;
-		if (ft_strncmp(data->input_line, data->delimiter,
-				ft_strlen(data->input_line))
-			== 0 && ft_strlen(data->input_line) == ft_strlen(data->delimiter))
-		{
-			free(data->input_line);
-			break ;
-		}
-		data->temp = malloc(data->file_contents_length
-				+ ft_strlen(data->input_line) + 2);
-		if (data->temp != NULL)
-		{
-			ft_memcpy(data->temp, data->file_contents,
-				data->file_contents_length);
-			free(data->file_contents);
-			data->file_contents = data->temp;
-			ft_strlcpy(data->file_contents + data->file_contents_length,
-				data->input_line, ft_strlen(data->input_line) + 1);
-			data->file_contents_length += ft_strlen(data->input_line);
-			data->file_contents[data->file_contents_length++] = '\n';
-		}
-		free(data->input_line);
+		ft_putstr_fd("Error: Allocation failed\n", 2);
+		return ;
 	}
-}
-
-void	init_redir_data(t_data *data, char **input, int i)
-{
-	data->str = ft_strdup(*input);
-	data->temp_file = "./temp_here_document.txt";
-	data->fd = open(data->temp_file, O_CREAT | O_RDONLY, 0644);
-	data->j = 0;
-	i += 2;
-	data->k = 0;
-	data->file_contents_length = 0;
-	data->delimiter = malloc(sizeof(char) * (ft_strlen(*input) + 1));
-	data->input_line = NULL;
-	data->temp = NULL;
-	data->file_contents = NULL;
-	while (data->str[i] == ' ')
-		i++;
-	while (data->str[i])
-	{
-		data->delimiter[data->j++] = data->str[i++];
-		if (data->str[i] == ' ')
-			return ;
-	}
-	data->delimiter[data->j] = '\0';
-	close(data->fd);
+	while (data->old_command[--heredoc_pos] == ' ')
+		;
+	while (data->old_command[--heredoc_pos] == '<')
+		;
+	ft_strlcpy(data->new_command, data->old_command, heredoc_pos + 1);
+	data->new_command[heredoc_pos] = '\0';
+	ft_strlcat(data->new_command, " < ", data->length);
+	ft_strlcat(data->new_command, temp_filename, data->length);
+	ft_strlcat(data->new_command, data->delimiter_end, data->length);
+	free(*input);
+	*input = data->new_command;
 }
 
 void	redir_delimiter(char *str, char **input, int i, t_data *data)
 {
-	int		j;
+	char	*delimiter;
+	char	*temp_filename;
+	int		fd_temp;
+	char	*line;
 
-	init_redir_data(data, input, i);
-	j = i + 2;
-	while (str[j] == ' ')
-		j++;
-	while (str[j] != ' ' && str[j] != '\0')
-		j++;
-	remove_redir_input(input, i, j);
-	redir_delimiter2(data);
-	write(1, data->file_contents, data->file_contents_length);
-	free(data->file_contents);
-	free(data->delimiter);
-	if (unlink(data->temp_file) != 0)
+	temp_filename = ".heredoc_tmp";
+	fd_temp = open(temp_filename, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	if (fd_temp < 0)
 	{
-		perror("Error\ndeleting here doc");
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("Error: Could not create temporary file\n", 2);
+		return ;
 	}
-	parser_redir(input, data);
+	if (str[i + 2] == ' ')
+		delimiter = get_filename(&(str[i + 3]), &i);
+	else
+		delimiter = get_filename(&(str[i + 2]), &i);
+	while ((line = readline("> ")) != NULL)
+	{
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
+			&& ft_strlen(delimiter) == ft_strlen(line))
+			break ;
+		write(fd_temp, line, ft_strlen(line));
+		write(fd_temp, "\n", 1);
+		free(line);
+	}
+	free(line);
+	close(fd_temp);
+	modify_command_for_heredoc(input, 0, temp_filename, data);
+	str = *input;
+	i -= 2;
+	handle_redir(input, data->i_memory, data);
 }
+
+//printf("delim:%s\n", delimiter);
+//printf("old:%s.\n", data->old_command);
+//printf("delimstart:%s.\n", data->delimiter_start);
+//printf("delimend:%s.\n", data->delimiter_end);
+//printf("delimend:%s.\n", data->delimiter_end);
+//printf("start:%s.\nend:%s.\n", data->delimiter_start, data->delimiter_end);
+//printf("len end:%ld.\n", ft_strlen(temp_filename));
+//printf("len:%d.\n", data->length);
+//printf("pos:%d.\n", heredoc_pos);
+//printf("new:%s.\n", data->new_command);
+//	printf("old:%s.\n", data->old_command);
+//printf("new_fin:%s.\n", data->new_command);

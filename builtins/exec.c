@@ -43,29 +43,26 @@ int		execute(char **inputs, t_data *data)
 	return (1);
 }
 
-void	handle_exec(char **inputs, t_data *data)
-{
-	pid_t	pid;
-	int		status;
+void handle_exec(char **inputs, t_data *data) {
+    pid_t pid;
+    int status;
 
-	status = 0;
-	//if (!check_exec(inputs, data))
-	//	return (error_sentence("\t\tminishell: Unknown command\n", 127));
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execute(inputs, data) != 0)
-			exit(errno);
-		exit(EXIT_SUCCESS);
-	}
-	else if (pid < 0)
-		exit(EXIT_FAILURE);
-	else
-	{
-		sig_exec_init();
-		waitpid(pid, &status, 0);
-	}
-	g_status = WEXITSTATUS(status);
-	if (g_quit)
-		g_status = 130;
+    status = 0;
+    pid = fork();
+    if (pid == 0) {
+        if (execute(inputs, data) != 0) {
+            exit(errno);
+        }
+        exit(EXIT_SUCCESS);
+    } else if (pid < 0) {
+        exit(EXIT_FAILURE);
+    } else {
+        sig_exec_init();
+        waitpid(pid, &status, 0);
+        if (WIFSIGNALED(status)) {
+            g_status = WTERMSIG(status) + 128;
+        } else {
+            g_status = WEXITSTATUS(status);
+        }
+    }
 }

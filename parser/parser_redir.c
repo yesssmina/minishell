@@ -1,9 +1,9 @@
 #include "../minishell.h"
 
-void		make_filename(char *src, char *dst, int i, int k)
+void	make_filename(char *src, char *dst, int i, int k)
 {
-	while (src[i] != ' ' && src[i] != '|' && src[i] != ';' && src[i] != '>' &&
-			src[i] != '<' && src[i])
+	while (src[i] != ' ' && src[i] != '|' && src[i] != ';' && src[i]
+		!= '>' && src[i] != '<' && src[i])
 	{
 		if (src[i] == '\'')
 		{
@@ -27,7 +27,7 @@ void		make_filename(char *src, char *dst, int i, int k)
 	dst[k] = '\0';
 }
 
-char		*get_filename(char *str, int *j)
+char	*get_filename(char *str, int *j)
 {
 	int		i;
 	int		k;
@@ -44,10 +44,10 @@ char		*get_filename(char *str, int *j)
 	return (filename);
 }
 
-void		remove_redir_input(char **input_address, int i, int j)
+void	remove_redir_input(char **input_address, int i, int j)
 {
-	char *tmp;
-	char *new_input;
+	char	*tmp;
+	char	*new_input;
 
 	tmp = ft_substr(input_address[0], 0, i);
 	new_input = ft_strjoin(tmp, &(input_address[0][j + 1]));
@@ -56,9 +56,9 @@ void		remove_redir_input(char **input_address, int i, int j)
 	*input_address = new_input;
 }
 
-void		parser_redir_quotes(char *str, int *i, char quote)
+void	parser_redir_quotes(char *str, int *i, char quote)
 {
-	int slash_count;
+	int	slash_count;
 
 	while (str[*i] != quote)
 	{
@@ -74,7 +74,7 @@ void		parser_redir_quotes(char *str, int *i, char quote)
 	}
 }
 
-int			parser_redir(char **input_address, t_data *data)
+int	parser_redir(char **input_address, t_data *data)
 {
 	int		i;
 	char	*str;

@@ -55,8 +55,6 @@ void		close_fds(t_data *data)
 void		exit_pipe(t_data *data)
 {
 	free_inputs(data->env);
-	if (g_user_input)
-		free(g_user_input);
 	free(data->pwd);
 	exit(EXIT_SUCCESS);
 }

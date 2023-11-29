@@ -7,8 +7,6 @@ void	handle_parentps(char *input2, t_data *data, int pid, int *fds)
 
 	if (waitpid(pid, &status, 0) != pid)
 		exit(EXIT_FAILURE);
-	free(g_user_input);
-	g_user_input = NULL;
 	oldfd = dup(0);
 	dup2(fds[0], 0);
 	close(fds[0]);

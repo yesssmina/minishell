@@ -1,9 +1,7 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-char *g_user_input;
 int g_status;
-int g_quit;
 
 void	end_of_file(t_data *data, char *user_input)
 {
@@ -32,18 +30,14 @@ int		main(int ac, char **av, char **env)
 	(void)av;
 	data_init(&data, env);
 	g_status = 0;
-	g_user_input = NULL;
 	if (!data.env)
 		exit(EXIT_FAILURE);
 
-	while ((user_input = readline("minishell> ")))
-	{
-		if (user_input && *user_input)
-		{
-			add_history(user_input); // Ajoute l'entree à l'historique
-			parser_start(user_input, &data);
-			//free(user_input);
-		}
-	}
-	return (0);
+	while ((user_input = readline("minishell> "))) {
+        if (user_input && *user_input) {
+            add_history(user_input); // Ajoute l'entrée à l'histoire
+            parser_start(user_input, &data); // Passez l'entrée directement
+        }
+    }
+    return (0);
 }

@@ -1,12 +1,12 @@
 #include "../minishell.h"
 
-int		get_name_len(char *str)
+int	get_name_len(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (str[i] != ' ' && str[i] != '|' && str[i] != ';' && str[i] != '>' &&
-			str[i] != '<' && str[i])
+	while (str[i] != ' ' && str[i] != '|' && str[i] != ';' && str[i]
+		!= '>' && str[i] != '<' && str[i])
 	{
 		if (str[i] == '\'')
 		{
@@ -114,7 +114,8 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 void	handle_redir(char **input, int i, t_data *data)
 {
 	char	*str;
-	
+
+	data->i_memory = i;
 	str = *input;
 	if (str[i] == '>' && str[i + 1] != '>')
 		redir_to(str, i, input, data);
@@ -123,7 +124,5 @@ void	handle_redir(char **input, int i, t_data *data)
 	else if (str[i] == '<' && str[i + 1] != '<')
 		redir_from(str, i, input, data);
 	else if (str[i] == '<' && str[i + 1] == '<')
-	{
 		redir_delimiter(str, input, i, data);
-	}
 }
