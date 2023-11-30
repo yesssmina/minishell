@@ -8,14 +8,13 @@ void	error_sentence(char *str, int status)
 
 void	error_sentence_exec(char *input, int status)
 {
-	//printf("inp=%s\n", input);
 	g_status = status;
-	ft_putstr_fd(" Command '", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(input, 2);
-	ft_putstr_fd("' not found\n", 2);
+	ft_putstr_fd(": command not found\n", 2);
 }
 
-int		is_number(char *str)
+int	is_number(char *str)
 {
 	int	i;
 

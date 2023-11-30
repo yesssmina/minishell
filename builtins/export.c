@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int		var_index(char *name, t_data *data)
+int	var_index(char *name, t_data *data)
 {
 	int		y;
 	int		x;

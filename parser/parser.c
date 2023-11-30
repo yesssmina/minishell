@@ -1,8 +1,8 @@
 #include "../minishell.h"
 
-void			copy_inside_quotes(char **src, char **dst, char quote)
+void	copy_inside_quotes(char **src, char **dst, char quote)
 {
-	int slash_count;
+	int	slash_count;
 
 	while (**src != quote)
 	{
@@ -18,7 +18,7 @@ void			copy_inside_quotes(char **src, char **dst, char quote)
 	}
 }
 
-void			input_copy(char *dst, char *src)
+void	input_copy(char *dst, char *src)
 {
 	char	quote;
 
@@ -41,7 +41,7 @@ void			input_copy(char *dst, char *src)
 	*dst = '\0';
 }
 
-static int		input_len(char *str)
+static int	input_len(char *str)
 {
 	int		i;
 	char	quote;
@@ -68,7 +68,7 @@ static int		input_len(char *str)
 	return (i);
 }
 
-char			*input_cleaner(char *str)
+char	*input_cleaner(char *str)
 {
 	int		len;
 	char	*clean_input;
@@ -88,7 +88,7 @@ char			*input_cleaner(char *str)
 	return (clean_input);
 }
 
-int				parser_start(char *input, t_data *data)
+int	parser_start(char *input, t_data *data)
 {
 	char	*clean_input;
 

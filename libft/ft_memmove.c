@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbigourd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 14:50:40 by hbigourd          #+#    #+#             */
-/*   Updated: 2022/11/12 15:37:14 by hbigourd         ###   ########.fr       */
+/*   Updated: 2023/11/29 23:12:23 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	*ft_memmove(void *dest, void const *src, size_t size)
 	}
 	else
 		while (size-- > 0)
-				*dst++ = *source++;
+			*dst++ = *source++;
 	return (dest);
 }

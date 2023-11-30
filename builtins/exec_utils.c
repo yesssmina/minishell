@@ -24,7 +24,7 @@ char	**gen_paths(int index, t_data *data, char *input)
 	return (paths);
 }
 
-int		check_exec_path(char **inputs, t_data *data)
+int	check_exec_path(char **inputs, t_data *data)
 {
 	int			i;
 	int			index;
@@ -47,7 +47,7 @@ int		check_exec_path(char **inputs, t_data *data)
 	return (0);
 }
 
-int		check_exec(char **inputs, t_data *data)
+int	check_exec(char **inputs, t_data *data)
 {
 	int			ret;
 	struct stat	stats;

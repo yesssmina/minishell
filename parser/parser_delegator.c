@@ -31,7 +31,7 @@ static int	parser_semi(char *input, int semi_pos, t_data *data)
 	return (0);
 }
 
-int			check_special(char **input, int *i, t_data *data)
+int	check_special(char **input, int *i, t_data *data)
 {
 	if ((*input)[*i] == '\'')
 	{
@@ -55,7 +55,7 @@ int			check_special(char **input, int *i, t_data *data)
 	return (0);
 }
 
-int			parser_delegator(char *input, t_data *data, int piped)
+int	parser_delegator(char *input, t_data *data, int piped)
 {
 	int		i;
 	int		slash_count;

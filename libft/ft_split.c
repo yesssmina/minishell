@@ -6,27 +6,15 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 15:01:34 by hbigourd          #+#    #+#             */
-/*   Updated: 2023/11/28 01:58:38 by sannagar         ###   ########.fr       */
+/*   Updated: 2023/11/30 01:40:49 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-typedef struct s_split
+char	*ft_ss_tab(char *s, char c)
 {
-	char	*set;
-	size_t	i;
-	size_t	j;
-	char	*ss_tab;
-	char	**tab;
-	char	*s1;
-	size_t	nb_list;
-	char	tmp_set[2];
-}			t_split;
-
-char	*ft_ss_tab(char	*s, char c)
-{
-	t_split	v;
+	t_split_info	v;
 
 	v.i = 0;
 	v.j = 0;
@@ -53,7 +41,7 @@ char	*ft_ss_tab(char	*s, char c)
 
 char	**fill_tab(char **tab, size_t nb_list, char *s1, char c)
 {
-	t_split	v;
+	t_split_info	v;
 
 	v.i = 0;
 	v.j = 0;
@@ -73,7 +61,7 @@ char	**fill_tab(char **tab, size_t nb_list, char *s1, char c)
 
 size_t	ft_nb_c_in_list(char const *s, char c)
 {
-	t_split	v;
+	t_split_info	v;
 
 	v.i = 0;
 	v.j = 0;
@@ -95,7 +83,8 @@ size_t	ft_nb_c_in_list(char const *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	t_split	v;
+	t_split_info	v;
+	char			**tab;
 
 	if (!s)
 		return (NULL);
@@ -105,17 +94,17 @@ char	**ft_split(char const *s, char c)
 	if (!v.s1 || *v.s1 == '\0')
 	{
 		free(v.s1);
-		v.tab = malloc(sizeof(char *));
-		if (!v.tab)
+		tab = malloc(sizeof(char *));
+		if (!tab)
 			return (NULL);
-		v.tab[0] = NULL;
-		return (v.tab);
+		tab[0] = NULL;
+		return (tab);
 	}
 	v.nb_list = ft_nb_c_in_list(v.s1, c) + 1;
-	v.tab = malloc(sizeof(char *) * (v.nb_list + 1));
-	if (!v.tab)
+	tab = malloc(sizeof(char *) * (v.nb_list + 1));
+	if (!tab)
 		return (NULL);
-	v.tab = fill_tab(v.tab, v.nb_list, v.s1, c);
+	tab = fill_tab(tab, v.nb_list, v.s1, c);
 	free(v.s1);
-	return (v.tab);
+	return (tab);
 }

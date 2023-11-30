@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:32:42 by hbigourd          #+#    #+#             */
-/*   Updated: 2023/10/11 23:12:27 by sannagar         ###   ########.fr       */
+/*   Updated: 2023/11/29 23:53:39 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,18 @@
 # include <errno.h>
 # include <pthread.h>
 # include <stdint.h>
+# include <stddef.h>
 
+typedef struct s_split_info
+{
+	char	*set;
+	size_t	i;
+	size_t	j;
+	char	*ss_tab;
+	char	*s1;
+	size_t	nb_list;
+	char	tmp_set[2];
+}			t_split_info;
 
 typedef struct s_list
 {

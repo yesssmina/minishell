@@ -2,7 +2,7 @@
 
 void	change_env_pwd(t_data *data)
 {
-	char *pwd;
+	char	*pwd;
 
 	data->pwd = getcwd(NULL, 0);
 	if (var_index("PWD", data) >= 0)
@@ -21,8 +21,8 @@ void	change_env_pwd(t_data *data)
 
 void	change_env_oldpwd(t_data *data)
 {
-	char *pwd;
-	char *oldpwd;
+	char	*pwd;
+	char	*oldpwd;
 
 	if (var_index("OLDPWD", data) >= 0)
 	{
@@ -37,7 +37,7 @@ void	change_env_oldpwd(t_data *data)
 	free(data->pwd);
 }
 
-int		change_pwd(t_data *data, char *input)
+int	change_pwd(t_data *data, char *input)
 {
 	char	*pwd;
 	char	*cwd;

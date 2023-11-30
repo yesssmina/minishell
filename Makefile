@@ -26,7 +26,6 @@ all:	$(NAME)
 
 $(NAME): $(OBJS)
 	@make -s -C libft/
-	@make -s -C printf/
 	@printf "\033[KCompiling: $$file\r"; \
 	$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(INCLUDE) $(READLINE_FLAGS)
 	@echo "\033[1;32mMinishell: successful compilation\033[0m 🎇"
@@ -35,14 +34,12 @@ clean:
 	@printf "\033[KRemoving $$file\r";
 	@rm -f $(OBJS) $(B_OBJS)
 	@make -s clean -C libft/
-	@make -s clean -C printf/
 	@echo "\033[1;36m===>Minishell: .o correctly cleaned\033[0m"
 
 fclean: clean
 	@printf "\033[KRemoving $(NAME)\r"
 	@rm -f $(NAME) $(BONUS)
 	@rm -f ./libft/libft.a
-	@rm -f ./libft/libftprintf.a
 	@echo "\033[1;36m===>Minishell: .a correctly cleaned\033[0m"
 	
 re: fclean all

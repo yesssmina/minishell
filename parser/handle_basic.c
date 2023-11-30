@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void		choose_action(char **inputs, t_data *data)
+void	choose_action(char **inputs, t_data *data)
 {
 	if (!data->redir)
 	{
@@ -25,7 +25,7 @@ void		choose_action(char **inputs, t_data *data)
 		handle_exec(inputs, data);
 }
 
-void		free_inputs(char **inputs)
+void	free_inputs(char **inputs)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ void		free_inputs(char **inputs)
 	free(inputs);
 }
 
-void		close_fds(t_data *data)
+void	close_fds(t_data *data)
 {
 	if (data->fd_in != 0)
 	{
@@ -52,14 +52,14 @@ void		close_fds(t_data *data)
 	}
 }
 
-void		exit_pipe(t_data *data)
+void	exit_pipe(t_data *data)
 {
 	free_inputs(data->env);
 	free(data->pwd);
 	exit(EXIT_SUCCESS);
 }
 
-int			handle_basic(char *clean_input, t_data *data, int piped)
+int	handle_basic(char *clean_input, t_data *data, int piped)
 {
 	char	**inputs;
 	int		oldfd[2];

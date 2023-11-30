@@ -1,8 +1,8 @@
 #include "../minishell.h"
 
-static int		get_filename_len(char *str)
+static int	get_filename_len(char *str)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (ft_isalnum(str[len]) || str[len] == '_')
@@ -12,13 +12,13 @@ static int		get_filename_len(char *str)
 	return (len);
 }
 
-static void		add_escaped_char(char *src, char *dst, int *i, int *j)
+static void	add_escaped_char(char *src, char *dst, int *i, int *j)
 {
 	dst[(*j)++] = '\\';
 	dst[(*j)++] = src[(*i)++];
 }
 
-static char		*dup_value(char *str)
+static char	*dup_value(char *str)
 {
 	int		maxlen;
 	char	*value;
@@ -31,8 +31,8 @@ static char		*dup_value(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\' || str[i] == '$' || str[i] == '"' ||
-			str[i] == '\'' || str[i] == '>' || str[i] == '<')
+		if (str[i] == '\\' || str[i] == '$' || str[i] == '"'
+			|| str[i] == '\'' || str[i] == '>' || str[i] == '<')
 			add_escaped_char(str, value, &i, &j);
 		else
 			value[j++] = str[i++];
@@ -41,7 +41,7 @@ static char		*dup_value(char *str)
 	return (value);
 }
 
-static char		*get_value(char *name, t_data *data)
+static char	*get_value(char *name, t_data *data)
 {
 	char	**env;
 	int		i;
@@ -66,7 +66,7 @@ static char		*get_value(char *name, t_data *data)
 	return (NULL);
 }
 
-void			parser_variable(char **input_address, int *i, t_data *data)
+void	parser_variable(char **input_address, int *i, t_data *data)
 {
 	int		len;
 	char	*var_value;

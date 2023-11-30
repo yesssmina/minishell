@@ -1,8 +1,8 @@
 #include "../minishell.h"
 
-int		error_redir(char *str, int *i, char c)
+int	error_redir(char *str, int *i, char c)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (str[(*i)] == c)
@@ -21,7 +21,7 @@ int		error_redir(char *str, int *i, char c)
 
 void	skip_quotes(char *str, int *i)
 {
-	char quote;
+	char	quote;
 
 	quote = str[(*i)++];
 	while (str[(*i)] != quote)
@@ -33,9 +33,9 @@ void	skip_quotes(char *str, int *i)
 	}
 }
 
-int		parser_error(char *str)
+int	parser_error(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

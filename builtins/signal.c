@@ -1,15 +1,15 @@
 #include "../minishell.h"
 
-void handle_sig(int sig) {
-    if (sig == SIGINT) {
-        g_status = 130;
-        write(2, "\nminishell> ", 12); // Afficher l'invite directement
-    }
-    else if (sig == SIGQUIT) {
-        write(2, "\b\b  \b\b", 6);
-    }
+void	handle_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_status = 130;
+		write(2, "\nminishell> ", 12);
+	}
+	else if (sig == SIGQUIT)
+		write(2, "\b\b  \b\b", 6);
 }
-
 
 void	sig_init(void)
 {
@@ -19,14 +19,18 @@ void	sig_init(void)
 		exit(EXIT_FAILURE);
 }
 
-void handle_exec_sig(int sig) {
-    if (sig == SIGINT) {
-        g_status = 130;
-        write(2, "\n", 1);
-    } else if (sig == SIGQUIT) {
-        g_status = 131;
-        ft_putstr_fd("Exit (core dumped)\n", 2);
-    }
+void	handle_exec_sig(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_status = 130;
+		write(2, "\n", 1);
+	}
+	else if (sig == SIGQUIT)
+	{
+		g_status = 131;
+		ft_putstr_fd("Exit (core dumped)\n", 2);
+	}
 }
 
 void	sig_exec_init(void)

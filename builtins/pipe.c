@@ -16,7 +16,7 @@ void	handle_parentps(char *input2, t_data *data, int pid, int *fds)
 	close(oldfd);
 }
 
-int		handle_pipe(char *input1, char *input2, t_data *data)
+int	handle_pipe(char *input1, char *input2, t_data *data)
 {
 	pid_t	pid;
 	int		fds[2];

@@ -1,7 +1,6 @@
 #include "minishell.h"
-#include "libft/libft.h"
 
-int g_status;
+int	g_status;
 
 void	end_of_file(t_data *data, char *user_input)
 {
@@ -21,7 +20,18 @@ void	data_init(t_data *data, char **env)
 	data->redir = 1;
 }
 
-int		main(int ac, char **av, char **env)
+void	sig_init_main(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handle_sig;
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	char	*user_input;
@@ -32,12 +42,19 @@ int		main(int ac, char **av, char **env)
 	g_status = 0;
 	if (!data.env)
 		exit(EXIT_FAILURE);
-
-	while ((user_input = readline("minishell> "))) {
-        if (user_input && *user_input) {
-            add_history(user_input); // Ajoute l'entrée à l'histoire
-            parser_start(user_input, &data); // Passez l'entrée directement
-        }
-    }
-    return (0);
+	sig_init_main();
+	while (1)
+	{
+		sig_init_main();
+		user_input = readline("minishell> ");
+		if (!user_input)
+			break ;
+		if (*user_input)
+		{
+			add_history(user_input);
+			parser_start(user_input, &data);
+		}
+	}
+	printf("exit\n");
+	exit(EXIT_SUCCESS);
 }

@@ -18,18 +18,15 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-
-
 # include "libft/libft.h"
 
-typedef	struct	s_data
+typedef struct s_data
 {
-	char		**env;
-	int			fd_in;
-	int			fd_out;
-	char		*pwd;
-	int			redir;
+	char	**env;
+	int		fd_in;
+	int		fd_out;
+	char	*pwd;
+	int		redir;
 
 	char	*str;
 	char	*delimiter;
@@ -49,9 +46,10 @@ typedef	struct	s_data
 	char	*delimiter_start;
 	char	*delimiter_end;
 	int		i_memory;
+	int		heredoc_i;
 }				t_data;
 
-extern int			g_status;
+extern int		g_status;
 
 int				envlen(char **env);
 void			free_env(char **env);
@@ -77,6 +75,7 @@ int				is_relative(char *str);
 char			**gen_paths(int index, t_data *data, char *input);
 int				check_exec(char **inputs, t_data *data);
 void			handle_exec(char **args, t_data *data);
+void			handle_sig(int sig);
 
 void			replace_var(char *new_var, t_data *data, int index);
 int				var_index(char *name, t_data *data);
@@ -91,7 +90,7 @@ int				parser_error(char *str);
 void			parser_variable(char **input_address, int *i, t_data *data);
 int				parser_redir(char **input_address, t_data *data);
 void			handle_redir(char **input_address, int i, t_data *data);
-void			redir_delimiter(char *str, char **input, int i, t_data *data); //remove
+void			redir_delimiter(char *str, char **input, int i, t_data *data);
 void			remove_redir_input(char **input_address, int i, int j);
 int				get_name_len(char *str);
 char			*get_filename(char *str, int *j);

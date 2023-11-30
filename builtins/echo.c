@@ -2,8 +2,8 @@
 
 void	handle_echo(char **args)
 {
-	int i;
-	int n_flag;
+	int	i;
+	int	n_flag;
 
 	i = 1;
 	n_flag = 0;
