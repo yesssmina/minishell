@@ -2,18 +2,16 @@
 
 void	handle_parentps(char *input2, t_data *data, int pid, int *fds)
 {
-	int		oldfd;
-	int		status;
+	int	oldfd;
 
-	if (waitpid(pid, &status, 0) != pid)
-		exit(EXIT_FAILURE);
+	close(fds[1]);
 	oldfd = dup(0);
 	dup2(fds[0], 0);
 	close(fds[0]);
-	close(fds[1]);
 	parser_start(input2, data);
 	dup2(oldfd, 0);
 	close(oldfd);
+	waitpid(pid, NULL, 0);
 }
 
 int	handle_pipe(char *input1, char *input2, t_data *data)
