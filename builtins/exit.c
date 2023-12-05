@@ -17,36 +17,44 @@ void	error_sentence_exec(char *input, int status)
 int	is_number(char *str)
 {
 	int	i;
+	int	digit_count;
 
 	i = 0;
-	if (str[i] == '-')
+	digit_count = 0;
+	if (str[i] == '-' || str[i] == '+')
 		i++;
+	if (!ft_isdigit(str[i]))
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
+		digit_count++;
 	}
-	return (1);
+	return (digit_count > 0);
 }
 
 void	handle_exit(char **inputs, t_data *data)
 {
 	g_status = 0;
+	ft_putstr_fd("exit\n", 1);
 	if (inputs[1])
 	{
-		if (is_number(inputs[1]))
+		if (is_number(inputs[1]) && !is_number_too_large(inputs[1]))
 		{
-			if (inputs[2])
-				return (error_sentence("\tminishell: too many argument\n", 2));
 			g_status = ft_atoi(inputs[1]);
-			if (g_status > 255)
-				g_status = 255;
-			else if (g_status < 0)
-				g_status = 255;
+			g_status = g_status % 256;
 		}
 		else
-			error_sentence("\t\tminishell: numeric argument is required\n", 2);
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(inputs[0], 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(inputs[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			g_status = 2;
+		}
 	}
 	free_env(inputs);
 	free(data->pwd);

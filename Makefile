@@ -14,7 +14,7 @@ NAME	= minishell
 LIBFT	= libft/libft.a
 
 CC	= gcc
-FLAGS	= -Wall -Wextra -Werror -g
+FLAGS	= -Wall -Wextra -Werror -g3
 INCLUDE	= -L libft -lft
 READLINE_FLAGS = -lreadline -I /usr/include/readline
 

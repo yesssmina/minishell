@@ -28,6 +28,7 @@ typedef struct s_data
 	char	*pwd;
 	int		redir;
 
+	pid_t	parent_pid;
 	char	*str;
 	char	*delimiter;
 	int		j;

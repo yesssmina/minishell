@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:32:42 by hbigourd          #+#    #+#             */
-/*   Updated: 2023/11/29 23:53:39 by sannagar         ###   ########.fr       */
+/*   Updated: 2023/12/05 01:03:07 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lsts, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int			is_number_too_large(char *str);
 #endif

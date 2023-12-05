@@ -75,7 +75,7 @@ void	redir_delimiter(char *str, char **input, int i, t_data *data)
 	fd_temp = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_temp < 0)
 	{
-		ft_putstr_fd("Error: Could not create temporary file\n", 2);
+		ft_putstr_fd("Error: Could not create temporary file", 2);
 		return ;
 	}
 	if (str[i + 2] == ' ')

@@ -97,7 +97,11 @@ void	handle_export(char **inputs, t_data *data)
 					exit(EXIT_FAILURE);
 			}
 			else
-				return (error_sentence("export: bad identifier\n", 1));
+			{
+				ft_putstr_fd("minishell: export: '", 1);
+				ft_putstr_fd(inputs[1], 1);
+				return (error_sentence("': not a valid identifier\n", 1));
+			}
 			i++;
 		}
 	}

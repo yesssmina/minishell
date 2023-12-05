@@ -79,7 +79,11 @@ void	parser_variable(char **input_address, int *i, t_data *data)
 	if (len == 1 && input_address[0][*i + 1] == '?')
 		var_value = ft_itoa(g_status);
 	else if (len)
+	{
 		var_value = get_value(var_name, data);
+		if (!var_value)
+            var_value = ft_strdup("");
+	}
 	else
 		var_value = ft_strdup("$");
 	free(var_name);
