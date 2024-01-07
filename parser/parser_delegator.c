@@ -24,7 +24,7 @@ static int	parser_semi(char *input, int semi_pos, t_data *data)
 	new_input = ft_strdup(&input[semi_pos + 1]);
 	input[semi_pos - space] = '\0';
 	handle_basic(input, data, 0);
-	if (g_status != 130)
+	if (data->status != 130)
 		return (parser_start(new_input, data));
 	else
 		free(new_input);

@@ -33,7 +33,7 @@ void	skip_quotes(char *str, int *i)
 	}
 }
 
-int	parser_error(char *str)
+int	parser_error(char *str, t_data *data)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ int	parser_error(char *str)
 		{
 			if (error_redir(str, &i, str[i]))
 			{
-				g_status = 1;
+				data->status = 1;
 				ft_putstr_fd("Error: wrong or unsupported redirection\n", 2);
 				return (1);
 			}

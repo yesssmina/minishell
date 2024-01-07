@@ -7,7 +7,7 @@ SRCS	=	main.c	parser/parser_redir3.c \
 			builtins/exec.c  builtins/exec_utils.c builtins/env.c	\
 			builtins/export.c builtins/export_utils.c builtins/unset.c	\
 			builtins/pipe.c builtins/signal.c builtins/exit.c get_next_line.c \
-			parser/parser_redir4.c \
+			get_next_line_utils.c parser/parser_redir4.c \
 
 OBJS	= $(SRCS:.c=.o)
 NAME	= minishell
@@ -22,7 +22,7 @@ all:	$(NAME)
 
 %.o: %.c
 	@printf "\033[KCompiling: $<\r"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@make -s -C libft/

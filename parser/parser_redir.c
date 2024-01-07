@@ -92,10 +92,11 @@ int	parser_redir(char **input_address, t_data *data)
 		}
 		if (str[i] == '>' || str[i] == '<')
 		{
-			handle_redir(input_address, i, data);
+			if (handle_redir(input_address, i, data) == 0)
+				return (0);
 			return (1);
 		}
 		should_escape(&i, str);
 	}
-	return (0);
+	return (1);
 }

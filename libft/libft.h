@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:32:42 by hbigourd          #+#    #+#             */
-/*   Updated: 2023/12/05 01:03:07 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/06 22:58:47 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 # include <pthread.h>
 # include <stdint.h>
 # include <stddef.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100 
+# endif
+
+# ifndef NB_FILE_MAX
+#  define NB_FILE_MAX 100
+# endif
 
 typedef struct s_split_info
 {
@@ -86,4 +94,13 @@ void		ft_lstclear(t_list **lsts, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int			is_number_too_large(char *str);
+
+char			*get_next_line(int fd);
+int				ft_read(char **line, int fd);
+char			*ft_strjoin_custom(char *reading, char *tmp);
+size_t			ft_strlen_custom(const char *str);
+int				ft_strchr_custom(const char *s, int c);
+size_t			ft_strlcpy_custom(char *dest, char *src, size_t size);
+char			*ft_strdup_custom(char *s);
+
 #endif

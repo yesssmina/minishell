@@ -28,6 +28,8 @@ int	execute(char **inputs, t_data *data)
 	int			index;
 	struct stat	statounet;
 
+	sig_exec_init(data);
+	signal(SIGQUIT, SIG_DFL);
 	statounet.st_mode = 0;
 	index = var_index("PATH=", data);
 	stat(inputs[0], &statounet);
@@ -39,7 +41,7 @@ int	execute(char **inputs, t_data *data)
 		if (!execute_2(inputs, data))
 			return (0);
 	}
-	error_sentence_exec(inputs[0], 127);
+	error_sentence_exec(inputs[0], 127, data);
 	return (127);
 }
 
@@ -49,21 +51,33 @@ void	handle_exec(char **inputs, t_data *data)
 	int		status;
 
 	status = 0;
+	//puts("*hand_exe*");
+	sig_exec_init(data);
+
 	pid = fork();
 	if (pid == 0)
 	{
-		if (pid == 0)
-			exit(execute(inputs, data));
+		exit(execute(inputs, data));
 	}
 	else if (pid < 0)
 		exit(EXIT_FAILURE);
 	else
 	{
-		sig_exec_init();
 		waitpid(pid, &status, 0);
+		//write(2, ">>\n", 3);
 		if (WIFSIGNALED(status))
-			g_status = WTERMSIG(status) + 128;
+		{
+			data->status = WTERMSIG(status) + 128;
+			if (WTERMSIG(status) == 2)
+			{
+				write(2, "\n", 1);
+				//printf("\n");
+			}
+
+			if (WTERMSIG(status) == 3)
+				printf("Exit (core dumped)\n");
+		}
 		else
-			g_status = WEXITSTATUS(status);
+			data->status = WEXITSTATUS(status);
 	}
 }

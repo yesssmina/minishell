@@ -30,21 +30,21 @@ int	cd_path(char **args, t_data *data)
 void	handle_cd(char **args, t_data *data)
 {
 	if (args[1] && args[2])
-		return (error_sentence("cd: too many arguments\n", 1));
+		return (error_sentence("cd: too many arguments\n", 1, data));
 	else if (!args[1])
 	{
 		if (!cd_alone(data))
-			return (error_sentence("cd: HOME: is undefined\n", 1));
+			return (error_sentence("cd: HOME: is undefined\n", 1, data));
 	}
 	else if (ft_strncmp(args[1], "-", ft_strlen("-")) == 0)
 	{
 		if (!cd_minus(data))
-			return (error_sentence("cd: OLDPWD is undefined\n", 1));
+			return (error_sentence("cd: OLDPWD is undefined\n", 1, data));
 	}
 	else
 	{
 		if (!cd_path(args, data))
-			return (error_sentence("cd: no such file or directory\n", 1));
+			return (error_sentence("cd: no such file or directory\n", 1, data));
 	}
-	g_status = 0;
+	data->status = 0;
 }

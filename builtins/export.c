@@ -100,12 +100,12 @@ void	handle_export(char **inputs, t_data *data)
 			{
 				ft_putstr_fd("minishell: export: '", 1);
 				ft_putstr_fd(inputs[1], 1);
-				return (error_sentence("': not a valid identifier\n", 1));
+				return (error_sentence("': not a valid identifier\n", 1, data));
 			}
 			i++;
 		}
 	}
 	else
 		export_alone(data);
-	g_status = 0;
+	data->status = 0;
 }

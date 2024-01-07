@@ -47,25 +47,42 @@ void	modify_input(char **input, int heredoc_i, char *filename, t_data *data)
 	*input = data->new_command;
 }
 
-void	cmp_delim_input(char *delimiter, int fd_temp)
+int	cmp_delim_input(char *delimiter, int fd_temp)
 {
 	char	*line;
+	int		i;
 
-	line = "1";
-	while (line != NULL)
+	i = 1;
+	sig_reset();
+	while (1)
 	{
-		line = readline("> ");
+		write(1, "> ", 2);
+		line = get_next_line(0);
+		if (!line)
+		{
+			printf("\nminishell: warning: here-document at line %d delimited \
+by end-of-file (wanted `%s')\n", i, delimiter);
+			return (1);
+		}
+		if (!*line)
+		{
+
+			return (0);
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-			&& ft_strlen(delimiter) == ft_strlen(line))
-			break ;
+			&& ft_strlen(delimiter) == ft_strlen(line) - 1)
+			{
+				break ;
+			}
 		write(fd_temp, line, ft_strlen(line));
-		write(fd_temp, "\n", 1);
 		free(line);
+		i++;
 	}
 	free(line);
+	return (1);
 }
 
-void	redir_delimiter(char *str, char **input, int i, t_data *data)
+int	redir_delimiter(char *str, char **input, int i, t_data *data)
 {
 	char	*delimiter;
 	char	*temp_file;
@@ -76,17 +93,21 @@ void	redir_delimiter(char *str, char **input, int i, t_data *data)
 	if (fd_temp < 0)
 	{
 		ft_putstr_fd("Error: Could not create temporary file", 2);
-		return ;
+		return (0);
 	}
 	if (str[i + 2] == ' ')
 		delimiter = get_filename(&(str[i + 3]), &i);
 	else
 		delimiter = get_filename(&(str[i + 2]), &i);
-	cmp_delim_input(delimiter, fd_temp);
+	if (cmp_delim_input(delimiter, fd_temp) == 0)
+		return (0);
 	free(delimiter);
 	close(fd_temp);
 	modify_input(input, 0, temp_file, data);
 	str = *input;
 	i -= 2;
 	handle_redir(input, data->i_memory, data);
+	return (1);
 }
+
+//utiliser dup2?

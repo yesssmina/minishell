@@ -42,6 +42,6 @@ void	handle_unset(char **inputs, t_data *data)
 			i++;
 		}
 		else
-			return (error_sentence("unset: invalid identifier\n", 1));
+			return (error_sentence("unset: invalid identifier\n", 1, data));
 	}
 }

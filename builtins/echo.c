@@ -16,14 +16,14 @@ int	is_n_flag(char *arg)
 	return (1);
 }
 
-void	handle_echo(char **args)
+void	handle_echo(char **args, t_data *data)
 {
 	int	i;
 	int	n_flag;
 
 	i = 1;
 	n_flag = 0;
-	g_status = 0;
+	data->status = 0;
 	while (args[i] && is_n_flag(args[i]) && i++)
 		n_flag = 1;
 	while (args[i])

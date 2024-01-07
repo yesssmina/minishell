@@ -45,7 +45,7 @@ void	redir_to(char *str, int i, char **input, t_data *data)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error: wrong permissions\n", 2);
-		g_status = 1;
+		data->status = 1;
 		data->redir = 0;
 		return ;
 	}
@@ -73,11 +73,13 @@ void	redir_to_append(char *str, int i, char **input, t_data *data)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error: wrong permissions\n", 2);
-		g_status = 1;
+		data->status = 1;
 		data->redir = 0;
 		return ;
 	}
+
 	dup2(fd, 1);
+
 	if (data->fd_out != 1)
 		close(data->fd_out);
 	data->fd_out = fd;
@@ -91,6 +93,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	int		j;
 
 	j = i;
+	//puts("**debug1**");
 	if (str[j + 1] == ' ')
 		j++;
 	filename = get_filename(&(str[j + 1]), &j);
@@ -99,7 +102,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error: Wrong file name or wrong permissions\n", 2);
-		g_status = 1;
+		data->status = 1;
 		data->redir = 0;
 		return ;
 	}
@@ -110,10 +113,12 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	if (ft_strncmp(filename, ".heredoc_tmp", ft_strlen(filename)) == 0)
 		unlink(".heredoc_tmp");
 	free(filename);
+	//puts("**debug2**");
 	parser_redir(input, data);
+	//puts("**debug3**");
 }
 
-void	handle_redir(char **input, int i, t_data *data)
+int	handle_redir(char **input, int i, t_data *data)
 {
 	char	*str;
 
@@ -126,5 +131,9 @@ void	handle_redir(char **input, int i, t_data *data)
 	else if (str[i] == '<' && str[i + 1] != '<')
 		redir_from(str, i, input, data);
 	else if (str[i] == '<' && str[i + 1] == '<')
-		redir_delimiter(str, input, i, data);
+	{
+		if (redir_delimiter(str, input, i, data) == 0)
+			return (0);
+	}
+	return (1);
 }

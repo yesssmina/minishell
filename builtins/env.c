@@ -40,7 +40,7 @@ char	**dup_env(char **env)
 	return (data_env);
 }
 
-void	handle_env(char **env)
+void	handle_env(char **env, t_data *data)
 {
 	int		i;
 	int		j;
@@ -62,5 +62,5 @@ void	handle_env(char **env)
 		}
 		i++;
 	}
-	g_status = 0;
+	data->status = 0;
 }

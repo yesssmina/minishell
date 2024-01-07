@@ -48,9 +48,11 @@ typedef struct s_data
 	char	*delimiter_end;
 	int		i_memory;
 	int		heredoc_i;
+
+	int		status;
 }				t_data;
 
-extern int		g_status;
+extern int		g_signal;
 
 int				envlen(char **env);
 void			free_env(char **env);
@@ -62,12 +64,12 @@ void			quote_len(char **str, int *i, char quote);
 char			**input_split(char *str);
 
 int				handle_basic(char *clean_input, t_data *data, int piped);
-void			handle_echo(char **args);
+void			handle_echo(char **args, t_data *data);
 void			handle_cd(char **args, t_data *data);
 void			handle_unset(char **inputs, t_data *data);
 
 char			**export_env(char **old_env, char *export);
-void			handle_env(char **env);
+void			handle_env(char **env, t_data *data);
 
 int				change_pwd(t_data *data, char *input);
 void			handle_pwd(t_data *data);
@@ -87,11 +89,11 @@ void			handle_export(char **args, t_data *data);
 
 int				handle_pipe(char *input1, char *input2, t_data *data);
 int				parser_delegator(char *input, t_data *data, int piped);
-int				parser_error(char *str);
+int				parser_error(char *str, t_data *data);
 void			parser_variable(char **input_address, int *i, t_data *data);
 int				parser_redir(char **input_address, t_data *data);
-void			handle_redir(char **input_address, int i, t_data *data);
-void			redir_delimiter(char *str, char **input, int i, t_data *data);
+int				handle_redir(char **input_address, int i, t_data *data);
+int				redir_delimiter(char *str, char **input, int i, t_data *data);
 void			remove_redir_input(char **input_address, int i, int j);
 int				get_name_len(char *str);
 char			*get_filename(char *str, int *j);
@@ -101,19 +103,26 @@ void			copy_newsplit(char *src, char *dst, char quote);
 void			escape_char(char **dst, char **src);
 void			should_escape(int *i, char *str);
 
-void			sig_exec_init(void);
-void			sig_init(void);
+void			sig_exec_init(t_data *data);
+void			sig_init(t_data *data);
+void			sig_init_main(void);
+void			sig_ignore(void);
 
-void			error_sentence(char *str, int status);
-void			error_sentence_exec(char *input, int status);
+
+void			error_sentence(char *str, int status, t_data *data);
+void			error_sentence_exec(char *input, int status, t_data *data);
 void			handle_exit(char **inputs, t_data *data);
 
-int				get_next_line(int fd, char **line);
 int				create_line(char **str, char **line);
 int				check_nl(char *str);
 int				last_line(char **str, char **line);
 int				mega_error(char *str1, char *str2);
 
 void			redir_from(char *str, int i, char **input, t_data *data);
+void			redir_to_append(char *str, int i, char **input, t_data *data);
+void 			sigint_handler(int sig);
+void 			sig_reset();
+
+
 
 #endif
