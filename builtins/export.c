@@ -63,7 +63,7 @@ void	export_alone(t_data *data)
 	while (temp_env[i + 1])
 	{
 		j = i + 1;
-		if (strcmp(temp_env[i], temp_env[j]) > 0)
+		if (ft_strncmp(temp_env[i], temp_env[j], INT_MAX) > 0)
 		{
 			swap = temp_env[j];
 			temp_env[j] = temp_env[i];
@@ -99,8 +99,8 @@ void	handle_export(char **inputs, t_data *data)
 			else
 			{
 				ft_putstr_fd("minishell: export: '", 1);
-				ft_putstr_fd(inputs[1], 1);
-				return (error_sentence("': not a valid identifier\n", 1, data));
+				ft_putstr_fd(inputs[i], 1);
+				error_sentence("': not a valid identifier\n", 1, data);
 			}
 			i++;
 		}

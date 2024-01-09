@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:56:24 by hbigourd          #+#    #+#             */
-/*   Updated: 2023/12/05 01:02:25 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:08:57 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	is_number_too_large(char *str)
 	int		str_len;
 
 	is_negative = 0;
-	str_len = strlen(str);
+	str_len = ft_strlen(str);
 	min_long_long = "9223372036854775808";
 	max_long_long = "9223372036854775807";
 	if (str[0] == '-')
