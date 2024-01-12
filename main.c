@@ -19,14 +19,13 @@ void	data_init(t_data *data, char **env)
 	data->fd_out = 1;
 	data->redir = 1;
 	data->parent_pid = getpid();
-	//puts("**data_init**");
+	data->p = 0;
 }
 
 void	sig_init_main(void)
 {
 	struct sigaction	sa;
 
-	//puts("**init**");
 	sa.sa_handler = handle_sig;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
@@ -38,7 +37,6 @@ void	sig_ignore(void)
 {
 	struct sigaction	sa;
 
-	//puts("**sig_ignore**");
 	sa.sa_handler = handle_sig;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);

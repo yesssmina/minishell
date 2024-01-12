@@ -51,7 +51,6 @@ void	handle_exec(char **inputs, t_data *data)
 	int		status;
 
 	status = 0;
-	//puts("*hand_exe*");
 	sig_exec_init(data);
 
 	pid = fork();
@@ -64,14 +63,12 @@ void	handle_exec(char **inputs, t_data *data)
 	else
 	{
 		waitpid(pid, &status, 0);
-		//write(2, ">>\n", 3);
 		if (WIFSIGNALED(status))
 		{
 			data->status = WTERMSIG(status) + 128;
 			if (WTERMSIG(status) == 2)
 			{
-				write(2, "\n", 1);
-				//printf("\n");
+				write(1, "\n", 1);
 			}
 
 			if (WTERMSIG(status) == 3)

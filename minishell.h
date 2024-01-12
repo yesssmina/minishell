@@ -48,7 +48,7 @@ typedef struct s_data
 	char	*delimiter_end;
 	int		i_memory;
 	int		heredoc_i;
-
+	int		p;
 	int		status;
 }				t_data;
 
@@ -123,6 +123,18 @@ void			redir_to_append(char *str, int i, char **input, t_data *data);
 void 			sigint_handler(int sig);
 void 			sig_reset();
 
+int	redir_error(char *str, int i);
+int	redir_error1(char *str, int i);
+int	redir_error2(char *str, int i);
+int	redir_error3(char *str, int i);
+int	redir_error4(char *str, int i);
+int	redir_error5(char *str, int i);
+int	redir_error_pipe(char *str, int i);
+int	redir_error_pipe1(char *str, int i);
+int	redir_error_semi(char *str, int i);
+int	redir_error_semi1(char *str, int i);
+int	redir_error_space(char *str, int i);
+int	ambigus_redir(char *str, int i);
 
 
 #endif

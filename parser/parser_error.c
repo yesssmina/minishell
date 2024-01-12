@@ -38,6 +38,7 @@ int	parser_error(char *str, t_data *data)
 	int	i;
 
 	i = 0;
+	//printf("*%s\ni:%d\n", str, i);
 	while (str[i])
 	{
 		if (str[i] == '\\')
@@ -46,9 +47,14 @@ int	parser_error(char *str, t_data *data)
 			skip_quotes(str, &i);
 		if (str[i] == '>' || str[i] == '<')
 		{
-			if (error_redir(str, &i, str[i]))
+			if (!redir_error(str, i))
 			{
-				data->status = 1;
+				data->status = 2;
+				return (1);
+			}
+			else if (error_redir(str, &i, str[i]))
+			{
+				data->status = 2;
 				ft_putstr_fd("Error: wrong or unsupported redirection\n", 2);
 				return (1);
 			}

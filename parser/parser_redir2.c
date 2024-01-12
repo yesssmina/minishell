@@ -79,7 +79,6 @@ void	redir_to_append(char *str, int i, char **input, t_data *data)
 	}
 
 	dup2(fd, 1);
-
 	if (data->fd_out != 1)
 		close(data->fd_out);
 	data->fd_out = fd;
@@ -93,7 +92,6 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	int		j;
 
 	j = i;
-	//puts("**debug1**");
 	if (str[j + 1] == ' ')
 		j++;
 	filename = get_filename(&(str[j + 1]), &j);
@@ -113,9 +111,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	if (ft_strncmp(filename, ".heredoc_tmp", ft_strlen(filename)) == 0)
 		unlink(".heredoc_tmp");
 	free(filename);
-	//puts("**debug2**");
 	parser_redir(input, data);
-	//puts("**debug3**");
 }
 
 int	handle_redir(char **input, int i, t_data *data)
@@ -124,6 +120,7 @@ int	handle_redir(char **input, int i, t_data *data)
 
 	data->i_memory = i;
 	str = *input;
+
 	if (str[i] == '>' && str[i + 1] != '>')
 		redir_to(str, i, input, data);
 	else if (str[i] == '>' && str[i + 1] == '>')

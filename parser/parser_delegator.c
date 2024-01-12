@@ -17,13 +17,23 @@ static int	parser_semi(char *input, int semi_pos, t_data *data)
 {
 	char	*new_input;
 	int		space;
+	int		i;
+	int		flag_pipe;
 
+	i = 0;
+	flag_pipe = 0;
 	space = 0;
 	if (input[semi_pos - 1] == ' ')
 		space = 1;
 	new_input = ft_strdup(&input[semi_pos + 1]);
 	input[semi_pos - space] = '\0';
-	handle_basic(input, data, 0);
+	while (new_input[i])
+	{
+		if (new_input[i++] == '|')
+			flag_pipe = 1;
+	}
+	if (!flag_pipe)
+		handle_basic(input, data, 0);
 	if (data->status != 130)
 		return (parser_start(new_input, data));
 	else
@@ -41,16 +51,33 @@ int	check_special(char **input, int *i, t_data *data)
 	}
 	else if ((*input)[*i] == '|')
 	{
+		if (!redir_error_pipe1(*input, *i) || !redir_error_pipe(*input, *i))
+		{
+			data->status = 2;
+			return (1);
+		}
 		parser_pipe((*input), *i, data);
 		return (1);
 	}
 	else if ((*input)[*i] == ';')
 	{
+		if (!redir_error_semi1(*input, *i) || !redir_error_semi(*input, *i))
+		{
+			data->status = 2;
+			return (1);
+		}
 		parser_semi((*input), *i, data);
 		return (1);
 	}
 	else if ((*input)[*i] == '$')
+	{
+		if (!ambigus_redir((*input), *i))
+		{
+			data->status = 1;
+			return (1);
+		}
 		parser_variable(input, i, data);
+	}
 	(*i)++;
 	return (0);
 }

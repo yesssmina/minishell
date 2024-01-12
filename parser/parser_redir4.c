@@ -47,7 +47,7 @@ void	modify_input(char **input, int heredoc_i, char *filename, t_data *data)
 	*input = data->new_command;
 }
 
-int	cmp_delim_input(char *delimiter, int fd_temp)
+int	cmp_delim_input(char *delimiter, int fd_temp, t_data *data)
 {
 	char	*line;
 	int		i;
@@ -60,20 +60,17 @@ int	cmp_delim_input(char *delimiter, int fd_temp)
 		line = get_next_line(0);
 		if (!line)
 		{
-			printf("\nminishell: warning: here-document at line %d delimited \
-by end-of-file (wanted `%s')\n", i, delimiter);
-			return (1);
-		}
-		if (!*line)
-		{
-
+			free(line);
+			//printf("\nminishell: warning: here-document at line %d delimited 
+//by end-of-file (wanted `%s')\n", i, delimiter);
+			data->status = g_signal;
 			return (0);
 		}
+		if (!*line)
+			return (0);
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
 			&& ft_strlen(delimiter) == ft_strlen(line) - 1)
-			{
 				break ;
-			}
 		write(fd_temp, line, ft_strlen(line));
 		free(line);
 		i++;
@@ -99,7 +96,7 @@ int	redir_delimiter(char *str, char **input, int i, t_data *data)
 		delimiter = get_filename(&(str[i + 3]), &i);
 	else
 		delimiter = get_filename(&(str[i + 2]), &i);
-	if (cmp_delim_input(delimiter, fd_temp) == 0)
+	if (cmp_delim_input(delimiter, fd_temp, data) == 0)
 		return (0);
 	free(delimiter);
 	close(fd_temp);
@@ -109,5 +106,3 @@ int	redir_delimiter(char *str, char **input, int i, t_data *data)
 	handle_redir(input, data->i_memory, data);
 	return (1);
 }
-
-//utiliser dup2?
