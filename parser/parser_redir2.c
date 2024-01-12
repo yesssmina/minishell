@@ -49,7 +49,9 @@ void	redir_to(char *str, int i, char **input, t_data *data)
 		data->redir = 0;
 		return ;
 	}
+
 	dup2(fd, 1);
+	close(fd);
 	if (data->fd_out != 1)
 		close(data->fd_out);
 	data->fd_out = fd;

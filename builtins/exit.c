@@ -8,10 +8,24 @@ void	error_sentence(char *str, int status, t_data *data)
 
 void	error_sentence_exec(char *input, int status, t_data *data)
 {
-	data->status = status;
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(input, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	int	i;
+
+	i = 0;
+	//printf("*err:%s.\n", input);
+	if (var_index("PATH=", data) < 0 || (input[i] == '.' && input[i + 1] == '/'))
+    {
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(input, 2);
+        ft_putstr_fd(": No such file or directory\n", 2);
+    }
+	else
+	{
+		//puts("error");
+		data->status = status;
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(input, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 }
 
 int	is_number(char *str)

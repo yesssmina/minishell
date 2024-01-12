@@ -20,6 +20,7 @@ void	data_init(t_data *data, char **env)
 	data->redir = 1;
 	data->parent_pid = getpid();
 	data->p = 0;
+	data->succes_redir = 0;
 }
 
 void	sig_init_main(void)

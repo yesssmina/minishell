@@ -50,6 +50,7 @@ typedef struct s_data
 	int		heredoc_i;
 	int		p;
 	int		status;
+	int		succes_redir;
 }				t_data;
 
 extern int		g_signal;
@@ -134,7 +135,7 @@ int	redir_error_pipe1(char *str, int i);
 int	redir_error_semi(char *str, int i);
 int	redir_error_semi1(char *str, int i);
 int	redir_error_space(char *str, int i);
-int	ambigus_redir(char *str, int i);
+int	ambigus_redir(char *str, int i, t_data *data);
 
 
 #endif

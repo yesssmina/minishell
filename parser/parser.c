@@ -78,6 +78,7 @@ char	*input_cleaner(char *str)
 	while (*str == ' ' && *str)
 		str++;
 	len = input_len(str);
+	//printf("**%s.\n%d.\n", str, len);
 	if (len == -1)
 		return (0);
 	clean_input = (char *)malloc((len + 1) * sizeof(char));
@@ -92,6 +93,13 @@ int	parser_start(char *input, t_data *data)
 {
 	char	*clean_input;
 
+	//printf("echo\\*%s.\n", input);
+	if (!ft_strncmp(input, "echo\\", 5))
+	{
+		input = input_cleaner(input);
+		error_sentence_exec(input, 127, data);
+		return (0);
+	}
 	clean_input = input_cleaner(input);
 	if (clean_input == 0)
 	{

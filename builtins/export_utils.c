@@ -5,6 +5,9 @@ int	check_export(char *str)
 	int	i;
 
 	i = 0;
+
+	if (str[0] == '\0')
+        return (0);
 	if (ft_isdigit(str[i]))
 		return (0);
 	while (str[i] && str[i] != '=')

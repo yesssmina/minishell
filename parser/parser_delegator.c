@@ -71,11 +71,8 @@ int	check_special(char **input, int *i, t_data *data)
 	}
 	else if ((*input)[*i] == '$')
 	{
-		if (!ambigus_redir((*input), *i))
-		{
-			data->status = 1;
+		if (!ambigus_redir((*input), *i, data))
 			return (1);
-		}
 		parser_variable(input, i, data);
 	}
 	(*i)++;
