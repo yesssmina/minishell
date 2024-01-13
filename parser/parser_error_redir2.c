@@ -48,15 +48,14 @@ int	redir_error_pipe(char *str, int i)
 
 int	redir_error_pipe1(char *str, int i)
 {
-	//printf("*%s\ni:%d\n", str, i);
 	if (!redir_error(str, i - 2))
 		return (0);
-	if (str[i + 1] == ';' && str[i - 1] == '<')
+	if (str[i + 1] && str[i - 1] && str[i + 1] == ';' && str[i - 1] == '<')
 	{
 		ft_putendl_fd("minishell: syntax error near unexpected token `|;'", 2);
 		return(0);
 	}
-	else if (str[i + 1] == ';' && str[i - 1] == '>')
+	else if (str[i + 1] && str[i - 1] && str[i + 1] == ';' && str[i - 1] == '>')
 	{
 		ft_putendl_fd("minishell: syntax error near unexpected token `|;'", 2);
 		return(0);

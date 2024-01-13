@@ -95,13 +95,13 @@ int	redir_error(char *str, int i)
 	while (str[i] && str[i] != '>' && str[i] != '<')
 		i++;
 
-	if (str[i] == '>' && str[i + 1] == '>')
+	if (str[i] && str[i + 1] && str[i] == '>' && str[i + 1] == '>')
 	{
 		if (!redir_error1(str, i) || !redir_error2(str, i))
 			return (0);
 	}
 
-	else if (str[i] == '<' && str[i + 1] == '<')
+	else if (str[i] && str[i + 1] && str[i] == '<' && str[i + 1] == '<')
 	{
 		if (!redir_error3(str, i) || !redir_error4(str, i))
 			return (0);
@@ -112,7 +112,7 @@ int	redir_error(char *str, int i)
 		if (!redir_error5(str, i))
 			return (0);
 	}
-	if (!redir_error_space(str, i))
+	if (str[i] && !redir_error_space(str, i))
 		return (0);
 	return (1);
 }
