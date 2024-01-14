@@ -80,7 +80,8 @@ char	*ft_strjoin_custom(char *line, char *tmp)
 
 	if (!line)
 		return (tmp);
-	result = malloc(sizeof(char) * (ft_strlen_custom(line) + ft_strlen_custom(tmp)+ 1));
+	result = malloc(sizeof(char) * (ft_strlen_custom(line)
+				+ ft_strlen_custom(tmp)+ 1));
 	if (!result)
 	{
 		free(tmp);

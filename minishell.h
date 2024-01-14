@@ -51,6 +51,7 @@ typedef struct s_data
 	int		p;
 	int		status;
 	int		succes_redir;
+	char	*current_input;
 }				t_data;
 
 extern int		g_signal;
@@ -109,7 +110,6 @@ void			sig_init(t_data *data);
 void			sig_init_main(void);
 void			sig_ignore(void);
 
-
 void			error_sentence(char *str, int status, t_data *data);
 void			error_sentence_exec(char *input, int status, t_data *data);
 void			handle_exit(char **inputs, t_data *data);
@@ -121,21 +121,19 @@ int				mega_error(char *str1, char *str2);
 
 void			redir_from(char *str, int i, char **input, t_data *data);
 void			redir_to_append(char *str, int i, char **input, t_data *data);
-void 			sigint_handler(int sig);
-void 			sig_reset();
+void			sigint_handler(int sig);
+void			sig_reset(void);
 
-int	redir_error(char *str, int i);
-int	redir_error1(char *str, int i);
-int	redir_error2(char *str, int i);
-int	redir_error3(char *str, int i);
-int	redir_error4(char *str, int i);
-int	redir_error5(char *str, int i);
-int	redir_error_pipe(char *str, int i);
-int	redir_error_pipe1(char *str, int i);
-int	redir_error_semi(char *str, int i);
-int	redir_error_semi1(char *str, int i);
-int	redir_error_space(char *str, int i);
-int	ambigus_redir(char *str, int i, t_data *data);
-
+int				redir_error(char *str, int i);
+int				redir_error1(char *str, int i);
+int				redir_error2(char *str, int i);
+int				redir_error3(char *str, int i);
+int				redir_error4(char *str, int i);
+int				redir_error5(char *str, int i);
+int				redir_error_pipe(char *str, int i);
+int				redir_error_pipe1(char *str, int i);
+int				redir_error_semi(char *str, int i);
+int				redir_error_semi1(char *str, int i);
+int				redir_error_space(char *str, int i);
 
 #endif

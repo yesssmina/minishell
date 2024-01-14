@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:32:42 by hbigourd          #+#    #+#             */
-/*   Updated: 2024/01/06 22:58:47 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/14 01:57:54 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int			is_number_too_large(char *str);
 
-char			*get_next_line(int fd);
-int				ft_read(char **line, int fd);
-char			*ft_strjoin_custom(char *reading, char *tmp);
-size_t			ft_strlen_custom(const char *str);
-int				ft_strchr_custom(const char *s, int c);
-size_t			ft_strlcpy_custom(char *dest, char *src, size_t size);
-char			*ft_strdup_custom(char *s);
+char		*get_next_line(int fd);
+int			ft_read(char **line, int fd);
+char		*ft_strjoin_custom(char *reading, char *tmp);
+size_t		ft_strlen_custom(const char *str);
+int			ft_strchr_custom(const char *s, int c);
+size_t		ft_strlcpy_custom(char *dest, char *src, size_t size);
+char		*ft_strdup_custom(char *s);
 
 #endif

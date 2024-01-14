@@ -33,12 +33,36 @@ void	skip_quotes(char *str, int *i)
 	}
 }
 
+int	ambiguous_error(char *str, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] == '>')
+	{
+		while (str[i] && str[i] == '>')
+			i++;
+	}
+	else
+		return (1);
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (str[i] && str[i] == '$')
+	{
+		data->status = 1;
+		ft_putendl_fd("minishell: ambiguous redirection", 2);
+		return (0);
+	}
+	return (1);
+}
+
 int	parser_error(char *str, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	//printf("*%s\ni:%d\n", str, i);
 	while (str[i])
 	{
 		if (str[i] == '\\')
@@ -54,6 +78,8 @@ int	parser_error(char *str, t_data *data)
 			}
 			else if (error_redir(str, &i, str[i]))
 			{
+				if (!ambiguous_error(data->current_input, data))
+					return (1);
 				data->status = 2;
 				ft_putstr_fd("Error: wrong or unsupported redirection\n", 2);
 				return (1);

@@ -49,7 +49,6 @@ void	redir_to(char *str, int i, char **input, t_data *data)
 		data->redir = 0;
 		return ;
 	}
-
 	dup2(fd, 1);
 	close(fd);
 	if (data->fd_out != 1)
@@ -79,7 +78,6 @@ void	redir_to_append(char *str, int i, char **input, t_data *data)
 		data->redir = 0;
 		return ;
 	}
-
 	dup2(fd, 1);
 	if (data->fd_out != 1)
 		close(data->fd_out);
@@ -122,7 +120,6 @@ int	handle_redir(char **input, int i, t_data *data)
 
 	data->i_memory = i;
 	str = *input;
-
 	if (str[i] == '>' && str[i + 1] != '>')
 		redir_to(str, i, input, data);
 	else if (str[i] == '>' && str[i + 1] == '>')

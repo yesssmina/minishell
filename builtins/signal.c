@@ -50,8 +50,7 @@ void	sig_exec_init(t_data *data)
 	}
 }
 
-
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
 	(void)sig;
 	close(0);
@@ -59,17 +58,16 @@ void sigint_handler(int sig)
 	write(1, "\n", 1);
 }
 
-void 	sig_reset()
+void	sig_reset(void)
 {
-   struct sigaction act;
+	struct sigaction	act;
 
-   act.sa_handler = sigint_handler;
-   sigemptyset(&act.sa_mask);
-   act.sa_flags = 0;
-
-   if (sigaction(SIGINT, &act, NULL) < 0)
-   {
-       perror("Error\nsigaction\n");
-       exit(1);
-   }
+	act.sa_handler = sigint_handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	if (sigaction(SIGINT, &act, NULL) < 0)
+	{
+		perror("Error\nsigaction\n");
+		exit(1);
+	}
 }

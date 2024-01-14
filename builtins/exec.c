@@ -41,6 +41,8 @@ int	execute(char **inputs, t_data *data)
 		if (!execute_2(inputs, data))
 			return (0);
 	}
+	if (inputs[0][0] == '\0')
+		return (0);
 	error_sentence_exec(inputs[0], 127, data);
 	return (127);
 }
@@ -52,12 +54,9 @@ void	handle_exec(char **inputs, t_data *data)
 
 	status = 0;
 	sig_exec_init(data);
-
 	pid = fork();
 	if (pid == 0)
-	{
 		exit(execute(inputs, data));
-	}
 	else if (pid < 0)
 		exit(EXIT_FAILURE);
 	else
@@ -67,10 +66,7 @@ void	handle_exec(char **inputs, t_data *data)
 		{
 			data->status = WTERMSIG(status) + 128;
 			if (WTERMSIG(status) == 2)
-			{
 				write(1, "\n", 1);
-			}
-
 			if (WTERMSIG(status) == 3)
 				printf("Exit (core dumped)\n");
 		}

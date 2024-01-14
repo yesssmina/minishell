@@ -61,8 +61,6 @@ int	cmp_delim_input(char *delimiter, int fd_temp, t_data *data)
 		if (!line)
 		{
 			free(line);
-			//printf("\nminishell: warning: here-document at line %d delimited 
-//by end-of-file (wanted `%s')\n", i, delimiter);
 			data->status = g_signal;
 			return (0);
 		}
@@ -70,7 +68,7 @@ int	cmp_delim_input(char *delimiter, int fd_temp, t_data *data)
 			return (0);
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
 			&& ft_strlen(delimiter) == ft_strlen(line) - 1)
-				break ;
+			break ;
 		write(fd_temp, line, ft_strlen(line));
 		free(line);
 		i++;

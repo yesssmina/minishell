@@ -82,7 +82,7 @@ void	parser_variable(char **input_address, int *i, t_data *data)
 	{
 		var_value = get_value(var_name, data);
 		if (!var_value)
-            var_value = ft_strdup("");
+			var_value = ft_strdup("");
 	}
 	else
 		var_value = ft_strdup("$");

@@ -21,6 +21,7 @@ void	data_init(t_data *data, char **env)
 	data->parent_pid = getpid();
 	data->p = 0;
 	data->succes_redir = 0;
+	data->current_input = NULL;
 }
 
 void	sig_init_main(void)
@@ -67,10 +68,12 @@ int	main(int ac, char **av, char **env)
 		}
 		if (*user_input)
 		{
+			data.current_input = ft_strdup(user_input);
 			add_history(user_input);
 			parser_start(user_input, &data);
 		}
 	}
+	free(data.current_input);
 	printf("exit\n");
 	exit(EXIT_SUCCESS);
 }
