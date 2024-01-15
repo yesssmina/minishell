@@ -52,6 +52,9 @@ typedef struct s_data
 	int		status;
 	int		succes_redir;
 	char	*current_input;
+
+	char			**envp;
+	char			**secret_envp;
 }				t_data;
 
 extern int		g_signal;
@@ -71,7 +74,7 @@ void			handle_cd(char **args, t_data *data);
 void			handle_unset(char **inputs, t_data *data);
 
 char			**export_env(char **old_env, char *export);
-void			handle_env(char **env, t_data *data);
+void			handle_env(char ** inputs, char **env, t_data *data);
 
 int				change_pwd(t_data *data, char *input);
 void			handle_pwd(t_data *data);
@@ -135,5 +138,19 @@ int				redir_error_pipe1(char *str, int i);
 int				redir_error_semi(char *str, int i);
 int				redir_error_semi1(char *str, int i);
 int				redir_error_space(char *str, int i);
+
+int				ft_fill_secret_envp(t_data *data);
+int				ft_add_old_pwd(t_data *data);
+int				ft_exist_in_secret_env(t_data *data, char *key);
+int				ft_add_pwd(t_data *data);
+int				ft_increment_shell_level(t_data *data);
+int				ft_same_key(char *str, char const *key);
+char			*ft_found_replace_value(t_data *data, char *word);
+int				ft_add_one_export(t_data *data, char const *key, char *str);
+int				ft_is_same_word(char const *s1, char const *s2);
+char			*ft_get_key(char *str);
+int				ft_add_one_envp(t_data *data, char *str);
+int				ft_size_tab1(char **tab1);
+void			ft_free_double_tab1(char **tab1);
 
 #endif

@@ -40,27 +40,25 @@ char	**dup_env(char **env)
 	return (data_env);
 }
 
-void	handle_env(char **env, t_data *data)
+void	handle_env(char **inputs, char **env, t_data *data)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int i;
 
 	i = 0;
-	while (env[i])
+	if (inputs[0] && !inputs[1] && ft_strlen(inputs[0]) == 3)
 	{
-		str = ft_strnstr(env[i], "=", ft_strlen("="));
-		if (str)
+		while (env[i])
 		{
-			j = 0;
-			while (env[i][j])
-			{
-				write(1, &env[i][j], 1);
-				j++;
-			}
+			ft_putstr_fd(env[i], 1);
 			ft_putchar_fd('\n', 1);
+			i++;
 		}
-		i++;
 	}
-	data->status = 0;
+	else
+	{
+		if (inputs[1])
+			error_sentence_exec(inputs[1], 127, data);
+		else
+			error_sentence_exec(inputs[0], 127, data);
+	}
 }

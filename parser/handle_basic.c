@@ -14,7 +14,7 @@ void	choose_action(char **inputs, t_data *data)
 	else if (!ft_strncmp(inputs[0], "cd", ft_strlen("cd")))
 		handle_cd(inputs, data);
 	else if (!ft_strncmp(inputs[0], "env", ft_strlen("env")))
-		handle_env(data->env, data);
+		handle_env(inputs, data->env, data);
 	else if (!ft_strncmp(inputs[0], "exit", ft_strlen("exit")))
 		handle_exit(inputs, data);
 	else if (!ft_strncmp(inputs[0], "export", ft_strlen("export")))
