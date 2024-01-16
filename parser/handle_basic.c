@@ -73,7 +73,7 @@ int	handle_basic(char *clean_input, t_data *data, int piped)
 	}
 	oldfd[0] = dup(1);
 	oldfd[1] = dup(0);
-	clean_input = input_cleaner(clean_input);
+	//clean_input = input_cleaner(clean_input);
 	if (parser_redir(&clean_input, data) == 0)
 	{
 		clean_input = input_cleaner(clean_input);
@@ -82,6 +82,7 @@ int	handle_basic(char *clean_input, t_data *data, int piped)
 		close_fds(data);
 		close(oldfd[0]);
 		close(oldfd[1]);
+		free(clean_input);
 		return (1);
 	}
 	clean_input = input_cleaner(clean_input);

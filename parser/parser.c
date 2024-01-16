@@ -96,6 +96,7 @@ int	parser_start(char *input, t_data *data)
 	{
 		input = input_cleaner(input);
 		error_sentence_exec(input, 127, data);
+		free(input);
 		return (0);
 	}
 	clean_input = input_cleaner(input);

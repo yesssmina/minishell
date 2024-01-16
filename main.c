@@ -62,15 +62,23 @@ int	main(int ac, char **av, char **env)
 	{
 		sig_init_main();
 		user_input = readline("minishell> ");
+		//printf("**%s.\n", user_input);
 		if (!user_input)
-			break ;
-		if (*user_input)
 		{
+		//	puts("***");
+			break ;
+		}
+		else if (*user_input)
+		{
+			//puts("===");
 			data.current_input = ft_strdup(user_input);
 			add_history(user_input);
 			parser_start(user_input, &data);
+			free(data.current_input);
 		}
-		free(data.current_input);
+		else
+        	free(user_input);
+
 	}
 	printf("exit\n");
 	exit(EXIT_SUCCESS);

@@ -97,6 +97,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	filename = get_filename(&(str[j + 1]), &j);
 	remove_redir_input(input, i, j);
 	fd = open(filename, O_RDONLY);
+	free(filename);
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error: Wrong file name or wrong permissions\n", 2);
@@ -110,7 +111,6 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	data->fd_in = fd;
 	if (ft_strncmp(filename, ".heredoc_tmp", ft_strlen(filename)) == 0)
 		unlink(".heredoc_tmp");
-	free(filename);
 	parser_redir(input, data);
 }
 

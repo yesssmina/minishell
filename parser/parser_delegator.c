@@ -53,6 +53,7 @@ int	check_special(char **input, int *i, t_data *data)
 	{
 		if (!redir_error_pipe1(*input, *i) || !redir_error_pipe(*input, *i))
 		{
+			free(*input);
 			data->status = 2;
 			return (1);
 		}
@@ -63,6 +64,7 @@ int	check_special(char **input, int *i, t_data *data)
 	{
 		if (!redir_error_semi1(*input, *i) || !redir_error_semi(*input, *i))
 		{
+			free(*input);
 			data->status = 2;
 			return (1);
 		}

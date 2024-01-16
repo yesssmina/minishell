@@ -47,7 +47,13 @@ int	redir_error_pipe(char *str, int i)
 
 int	redir_error_pipe1(char *str, int i)
 {
-	if (!redir_error(str, i - 2))
+	//printf("str:%s.\ni=%d\n", str, i);
+	if (str[0] == '|')
+	{
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
+		return (0);
+	}
+	if (i < 2 || !redir_error(str, i - 2))
 		return (0);
 	if (str[i + 1] && str[i - 1] && str[i + 1] == ';' && str[i - 1] == '<')
 	{

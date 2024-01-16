@@ -20,10 +20,13 @@ void	error_sentence_exec(char *input, int status, t_data *data)
 	}
 	else
 	{
-		data->status = status;
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(input, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		if (input)
+		{
+			data->status = status;
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(input, 2);
+			ft_putstr_fd(": command not found\n", 2);
+		}
 	}
 }
 

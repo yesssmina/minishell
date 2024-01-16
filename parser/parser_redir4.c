@@ -36,7 +36,7 @@ void	modify_input(char **input, int heredoc_i, char *filename, t_data *data)
 	}
 	while (data->old_command[--data->heredoc_i] == ' ')
 		;
-	while (data->old_command[--data->heredoc_i] == '<')
+	while (data->heredoc_i > 0 && data->old_command[--data->heredoc_i] == '<')
 		;
 	ft_strlcpy(data->new_command, data->old_command, data->heredoc_i + 1);
 	data->new_command[data->heredoc_i] = '\0';
@@ -83,6 +83,7 @@ int	redir_delimiter(char *str, char **input, int i, t_data *data)
 	char	*temp_file;
 	int		fd_temp;
 
+	unlink("./.heredoc_tmp");
 	temp_file = ".heredoc_tmp";
 	fd_temp = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_temp < 0)
@@ -95,12 +96,17 @@ int	redir_delimiter(char *str, char **input, int i, t_data *data)
 	else
 		delimiter = get_filename(&(str[i + 2]), &i);
 	if (cmp_delim_input(delimiter, fd_temp, data) == 0)
+	{
+		free(delimiter);
 		return (0);
+	}
 	free(delimiter);
 	close(fd_temp);
 	modify_input(input, 0, temp_file, data);
 	str = *input;
 	i -= 2;
+	if (data->heredoc_i == 0)
+		return (0);
 	handle_redir(input, data->i_memory, data);
 	return (1);
 }
