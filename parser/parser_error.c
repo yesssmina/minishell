@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:41:02 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 17:41:29 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:31:23 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,21 @@ int	parser_error(char *str, t_data *data)
 		}
 		else
 			i++;
+	}
+	return (0);
+}
+
+int	if_semi(char *str)
+{
+	if (str[0] == ';')
+	{
+		if (str[1] && str[1] == ';')
+			ft_putendl_fd("minishell: syntax error near unexpected token `;;'",
+				2);
+		else
+			ft_putendl_fd("minishell: syntax error near unexpected token `;'",
+				2);
+		return (1);
 	}
 	return (0);
 }

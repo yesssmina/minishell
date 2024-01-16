@@ -10,7 +10,7 @@ SRCS	=	main.c	parser/parser_redir3.c \
 			get_next_line_utils.c parser/parser_redir4.c \
 			parser/parser_error_redir.c parser/parser_error_redir2.c \
 			parser/parser_error_redir3.c builtins/signal_utils.c\
-			parser/handle_basic_utils.c \
+			parser/handle_basic_utils.c parser/parser_delegator_utils.c \
 
 OBJS	= $(SRCS:.c=.o)
 NAME	= minishell

@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 20:20:05 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:45:22 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ int				redir_error_semi(char *str, int i);
 int				redir_error_semi1(char *str, int i);
 int				redir_error_space(char *str, int i);
 int				if_semi(char *str);
+int				else_redir_error(char **input, int *i, t_data *data);
+int				else_redir_error2(char **input, int *i, t_data *data);
 
 
 #endif
