@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_basic.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:39:08 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 20:19:05 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	choose_action(char **inputs, t_data *data)
@@ -40,25 +52,10 @@ void	free_inputs(char **inputs)
 	free(inputs);
 }
 
-void	close_fds(t_data *data)
+void	ft_dup(int *oldfd)
 {
-	if (data->fd_in != 0)
-	{
-		close(data->fd_in);
-		data->fd_in = 0;
-	}
-	if (data->fd_out != 1)
-	{
-		close(data->fd_out);
-		data->fd_out = 1;
-	}
-}
-
-void	exit_pipe(t_data *data)
-{
-	free_inputs(data->env);
-	free(data->pwd);
-	exit(EXIT_SUCCESS);
+	oldfd[0] = dup(1);
+	oldfd[1] = dup(0);
 }
 
 int	handle_basic(char *clean_input, t_data *data, int piped)
@@ -71,30 +68,20 @@ int	handle_basic(char *clean_input, t_data *data, int piped)
 		free(clean_input);
 		return (0);
 	}
-	oldfd[0] = dup(1);
-	oldfd[1] = dup(0);
-	//clean_input = input_cleaner(clean_input);
+	ft_dup(oldfd);
 	if (parser_redir(&clean_input, data) == 0)
 	{
-		clean_input = input_cleaner(clean_input);
-		dup2(oldfd[0], 1);
-		dup2(oldfd[1], 0);
-		close_fds(data);
-		close(oldfd[0]);
-		close(oldfd[1]);
+		clean_input = input_cleaner(clean_input, data);
+		dup_close(oldfd, data);
 		free(clean_input);
 		return (1);
 	}
-	clean_input = input_cleaner(clean_input);
+	clean_input = input_cleaner(clean_input, data);
 	inputs = input_split(clean_input);
 	free(clean_input);
 	choose_action(inputs, data);
 	free_inputs(inputs);
-	dup2(oldfd[0], 1);
-	dup2(oldfd[1], 0);
-	close_fds(data);
-	close(oldfd[0]);
-	close(oldfd[1]);
+	dup_close(oldfd, data);
 	if (piped)
 		exit_pipe(data);
 	return (0);

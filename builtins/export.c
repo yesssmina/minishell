@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:37:45 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 18:21:56 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	var_index(char *name, t_data *data)
@@ -91,16 +103,10 @@ void	handle_export(char **inputs, t_data *data)
 			if (index >= 0 && check_export(inputs[i]))
 				replace_var(inputs[i], data, index);
 			else if (check_export(inputs[i]))
-			{
-				data->env = export_env(data->env, inputs[i]);
-				if (!data->env)
-					exit(EXIT_FAILURE);
-			}
+				export_env_handle_env(data, inputs, i);
 			else
 			{
-				ft_putstr_fd("minishell: export: '", 1);
-				ft_putstr_fd(inputs[i], 1);
-				error_sentence("': not a valid identifier\n", 1, data);
+				sentence_handle_export(data, inputs, i);
 				return ;
 			}
 			i++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:37:24 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 18:04:48 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	handle_sig(int sig)
@@ -56,18 +68,4 @@ void	sigint_handler(int sig)
 	close(0);
 	g_signal = 130;
 	write(1, "\n", 1);
-}
-
-void	sig_reset(void)
-{
-	struct sigaction	act;
-
-	act.sa_handler = sigint_handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	if (sigaction(SIGINT, &act, NULL) < 0)
-	{
-		perror("Error\nsigaction\n");
-		exit(1);
-	}
 }

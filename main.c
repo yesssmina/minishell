@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:43:37 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 18:51:32 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	g_signal;
@@ -13,7 +25,11 @@ void	end_of_file(t_data *data, char *user_input)
 
 void	data_init(t_data *data, char **env)
 {
+	g_signal = 0;
+	data->status = 0;
 	data->env = dup_env(env);
+	if (!data->env)
+		exit(EXIT_FAILURE);
 	data->pwd = getcwd(NULL, 0);
 	data->fd_in = 0;
 	data->fd_out = 1;
@@ -22,28 +38,7 @@ void	data_init(t_data *data, char **env)
 	data->p = 0;
 	data->succes_redir = 0;
 	data->current_input = NULL;
-}
-
-void	sig_init_main(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_sig;
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	sig_ignore(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_sig;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	data->i_cleaner = 0;
 }
 
 int	main(int ac, char **av, char **env)
@@ -54,10 +49,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	data_init(&data, env);
-	g_signal = 0;
-	data.status = 0;
-	if (!data.env)
-		exit(EXIT_FAILURE);
 	while (1)
 	{
 		sig_init_main();
@@ -72,7 +63,7 @@ int	main(int ac, char **av, char **env)
 			free(data.current_input);
 		}
 		else
-        	free(user_input);
+			free(user_input);
 	}
 	printf("exit\n");
 	exit(EXIT_SUCCESS);

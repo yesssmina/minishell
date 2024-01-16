@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:37:52 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 19:57:14 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	error_sentence(char *str, int status, t_data *data)
@@ -76,4 +88,11 @@ void	handle_exit(char **inputs, t_data *data)
 	free(data->pwd);
 	free_env(data->env);
 	exit(data->status);
+}
+
+void	exit_pipe(t_data *data)
+{
+	free_inputs(data->env);
+	free(data->pwd);
+	exit(EXIT_SUCCESS);
 }

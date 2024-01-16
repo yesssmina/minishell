@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:37:38 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 18:22:00 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	check_export(char *str)
@@ -45,4 +57,18 @@ int	print_export(char **env)
 		write(1, "\n", 1);
 	}
 	return (1);
+}
+
+void	sentence_handle_export(t_data *data, char **inputs, int i)
+{
+	ft_putstr_fd("minishell: export: '", 1);
+	ft_putstr_fd(inputs[i], 1);
+	error_sentence("': not a valid identifier\n", 1, data);
+}
+
+void	export_env_handle_env(t_data *data, char **inputs, int i)
+{
+	data->env = export_env(data->env, inputs[i]);
+	if (!data->env)
+		exit(EXIT_FAILURE);
 }

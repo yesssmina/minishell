@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:38:10 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 18:05:15 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	free_env(char **env)
@@ -42,7 +54,7 @@ char	**dup_env(char **env)
 
 void	handle_env(char **inputs, char **env, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (inputs[0] && !inputs[1] && ft_strlen(inputs[0]) == 3)

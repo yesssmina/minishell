@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:41:39 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 19:45:58 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	copy_inside_quotes(char **src, char **dst, char quote)
@@ -41,34 +53,35 @@ void	input_copy(char *dst, char *src)
 	*dst = '\0';
 }
 
-static int	input_len(char *str)
+static int	input_len(char *str, t_data *data)
 {
-	int		i;
 	char	quote;
 
-	i = 0;
 	while (*str)
 	{
 		if (*str == ' ' && (*(str + 1) == ' ' || *(str + 1) == '\0'))
 			str++;
-		else if (*str == '\\' && (str += 2))
-			i += 4;
+		else if (*str == '\\')
+		{
+			str += 2;
+			data->i_cleaner += 4;
+		}
 		else if (*str == '"' || *str == '\'')
 		{
 			quote = *(str++);
-			quote_len(&str, &i, quote);
+			quote_len(&str, &data->i_cleaner, quote);
 			if (!*str)
 				return (-1);
 			str++;
-			i = i + 2;
+			data->i_cleaner += 2;
 		}
 		else if (str++)
-			i++;
+			data->i_cleaner++;
 	}
-	return (i);
+	return (data->i_cleaner);
 }
 
-char	*input_cleaner(char *str)
+char	*input_cleaner(char *str, t_data *data)
 {
 	int		len;
 	char	*clean_input;
@@ -77,7 +90,7 @@ char	*input_cleaner(char *str)
 	str_start = str;
 	while (*str == ' ' && *str)
 		str++;
-	len = input_len(str);
+	len = input_len(str, data);
 	if (len == -1)
 		return (0);
 	clean_input = (char *)malloc((len + 1) * sizeof(char));
@@ -94,15 +107,16 @@ int	parser_start(char *input, t_data *data)
 
 	if (!ft_strncmp(input, "echo\\", 5))
 	{
-		input = input_cleaner(input);
+		input = input_cleaner(input, data);
 		error_sentence_exec(input, 127, data);
 		free(input);
 		return (0);
 	}
-	clean_input = input_cleaner(input);
+	clean_input = input_cleaner(input, data);
 	if (clean_input == 0)
 	{
 		free(clean_input);
+		free(input);
 		ft_putstr_fd("This minishell does not support multiline\n", 2);
 		return (0);
 	}

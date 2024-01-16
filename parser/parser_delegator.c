@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_delegator.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:41:33 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 19:43:35 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	parser_pipe(char *input, int pipe_pos, t_data *data)
@@ -53,6 +65,7 @@ int	check_special(char **input, int *i, t_data *data)
 	{
 		if (!redir_error_pipe1(*input, *i) || !redir_error_pipe(*input, *i))
 		{
+			free(*input);
 			data->status = 2;
 			return (1);
 		}
@@ -63,6 +76,7 @@ int	check_special(char **input, int *i, t_data *data)
 	{
 		if (!redir_error_semi1(*input, *i) || !redir_error_semi(*input, *i))
 		{
+			free(*input);
 			data->status = 2;
 			return (1);
 		}
@@ -100,7 +114,7 @@ int	parser_delegator(char *input, t_data *data, int piped)
 		}
 		if (check_special(&input, &i, data))
 		{
-			free(input);
+			//free(input);
 			return (0);
 		}
 	}

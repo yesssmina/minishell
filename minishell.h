@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 20:20:05 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -53,8 +65,7 @@ typedef struct s_data
 	int		succes_redir;
 	char	*current_input;
 
-	int		*pipe_pos;
-	int		*semi_pos;
+	int		i_cleaner;
 }				t_data;
 
 extern int		g_signal;
@@ -72,9 +83,13 @@ int				handle_basic(char *clean_input, t_data *data, int piped);
 void			handle_echo(char **args, t_data *data);
 void			handle_cd(char **args, t_data *data);
 void			handle_unset(char **inputs, t_data *data);
+void			exit_pipe(t_data *data);
+void			free_inputs(char **inputs);
+void			close_fds(t_data *data);
+void			dup_close(int *oldfd, t_data *data);
 
 char			**export_env(char **old_env, char *export);
-void			handle_env(char ** inputs, char **env, t_data *data);
+void			handle_env(char **inputs, char **env, t_data *data);
 
 int				change_pwd(t_data *data, char *input);
 void			handle_pwd(t_data *data);
@@ -91,6 +106,8 @@ int				print_export(char **env);
 int				check_export(char *str);
 char			**copy_export_env(char **env);
 void			handle_export(char **args, t_data *data);
+void			export_env_handle_env(t_data *data, char **inputs, int i);
+void			sentence_handle_export(t_data *data, char **inputs, int i);
 
 int				handle_pipe(char *input1, char *input2, t_data *data);
 int				parser_delegator(char *input, t_data *data, int piped);
@@ -103,7 +120,7 @@ void			remove_redir_input(char **input_address, int i, int j);
 int				get_name_len(char *str);
 char			*get_filename(char *str, int *j);
 void			input_copy(char *dst, char *src);
-char			*input_cleaner(char *str);
+char			*input_cleaner(char *str, t_data *data);
 void			copy_newsplit(char *src, char *dst, char quote);
 void			escape_char(char **dst, char **src);
 void			should_escape(int *i, char *str);
@@ -112,6 +129,8 @@ void			sig_exec_init(t_data *data);
 void			sig_init(t_data *data);
 void			sig_init_main(void);
 void			sig_ignore(void);
+void			sig_init_main(void);
+void			sig_reset(void);
 
 void			error_sentence(char *str, int status, t_data *data);
 void			error_sentence_exec(char *input, int status, t_data *data);
@@ -138,5 +157,7 @@ int				redir_error_pipe1(char *str, int i);
 int				redir_error_semi(char *str, int i);
 int				redir_error_semi1(char *str, int i);
 int				redir_error_space(char *str, int i);
+int				if_semi(char *str);
+
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_error_redir.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 17:40:39 by sannagar          #+#    #+#             */
+/*   Updated: 2024/01/16 19:54:46 by sannagar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	redir_error1(char *str, int i)
@@ -94,7 +106,6 @@ int	redir_error(char *str, int i)
 {
 	while (str[i] && str[i] != '>' && str[i] != '<')
 		i++;
-	//printf("i=%c.\n", str[i]);
 	if (str[i] && str[i + 1] && str[i] == '>' && str[i + 1] == '>')
 	{
 		if (!redir_error1(str, i) || !redir_error2(str, i))
@@ -113,4 +124,19 @@ int	redir_error(char *str, int i)
 	if (str[i] && !redir_error_space(str, i))
 		return (0);
 	return (1);
+}
+
+int	if_semi(char *str)
+{
+	if (str[0] == ';')
+	{
+		if (str[1] && str[1] == ';')
+			ft_putendl_fd("minishell: syntax error near unexpected token `;;'",
+				2);
+		else
+			ft_putendl_fd("minishell: syntax error near unexpected token `;'",
+				2);
+		return (1);
+	}
+	return (0);
 }
