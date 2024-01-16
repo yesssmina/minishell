@@ -102,6 +102,7 @@ int	parser_start(char *input, t_data *data)
 	clean_input = input_cleaner(input);
 	if (clean_input == 0)
 	{
+		free(clean_input);
 		ft_putstr_fd("This minishell does not support multiline\n", 2);
 		return (0);
 	}

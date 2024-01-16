@@ -53,7 +53,8 @@ typedef struct s_data
 	int		succes_redir;
 	char	*current_input;
 
-	char	**environ;
+	int		*pipe_pos;
+	int		*semi_pos;
 }				t_data;
 
 extern int		g_signal;

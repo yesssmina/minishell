@@ -94,6 +94,7 @@ int	redir_error(char *str, int i)
 {
 	while (str[i] && str[i] != '>' && str[i] != '<')
 		i++;
+	//printf("i=%c.\n", str[i]);
 	if (str[i] && str[i + 1] && str[i] == '>' && str[i + 1] == '>')
 	{
 		if (!redir_error1(str, i) || !redir_error2(str, i))
