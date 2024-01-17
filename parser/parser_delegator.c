@@ -6,21 +6,44 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:41:33 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 20:47:09 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 19:57:29 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	free_and_status(t_data *data, char *input, char *new_input)
+{
+	free(new_input);
+	free(input);
+	data->status = 2;
+}
+
 static int	parser_pipe(char *input, int pipe_pos, t_data *data)
 {
 	char	*new_input;
 	int		space;
+	int		i;
 
+	i = -1;
 	space = 0;
 	if (input[pipe_pos - 1] == ' ')
 		space = 1;
 	new_input = ft_strdup(&input[pipe_pos + 1]);
+	while (input[++i] != '\0')
+	{
+		if (input[i] == '<' && input[i + 1] == '<')
+		{
+			free_and_status(data, input, new_input);
+			return (ft_putendl_fd("minishell:Unsupported redirection", 2), 0);
+		}
+	}
+	if (input[i - 1] == '|')
+	{
+		free_and_status(data, input, new_input);
+		ft_putendl_fd("minishell: syntax error near unexpected token `|'", 2);
+		return (0);
+	}
 	input[pipe_pos - space] = '\0';
 	return (handle_pipe(input, new_input, data));
 }
