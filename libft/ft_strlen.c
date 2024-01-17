@@ -18,6 +18,6 @@ size_t	ft_strlen(char const *str)
 
 	compt = 0;
 	while (str[compt] != '\0')
-		compt ++;
+		compt++;
 	return (compt);
 }

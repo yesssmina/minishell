@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:39:21 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 17:39:23 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 02:52:20 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,32 +81,26 @@ static char	*get_value(char *name, t_data *data)
 void	parser_variable(char **input_address, int *i, t_data *data)
 {
 	int		len;
-	char	*var_value;
 	char	*var_name;
 	char	*new_input;
 	char	*tmp;
 
 	len = get_filename_len(&(input_address[0][*i + 1]));
 	var_name = ft_substr(*input_address, *i + 1, len);
+	data->var_value = get_value(var_name, data);
 	if (len == 1 && input_address[0][*i + 1] == '?')
-		var_value = ft_itoa(data->status);
+		data->var_value = ft_itoa(data->status);
 	else if (len)
-	{
-		var_value = get_value(var_name, data);
-		if (!var_value)
-			var_value = ft_strdup("");
-	}
+		ft_var_value(data);
 	else
-		var_value = ft_strdup("$");
+		data->var_value = ft_strdup("$");
 	free(var_name);
 	new_input = ft_substr(*input_address, 0, *i);
-	tmp = ft_strjoin(new_input, var_value);
+	tmp = ft_strjoin(new_input, data->var_value);
 	free(new_input);
 	new_input = ft_strjoin(tmp, &(input_address[0][*i + 1 + len]));
-	len = ft_strlen(var_value);
-	free(tmp);
-	free(var_value);
-	free(*input_address);
+	len = ft_strlen(data->var_value);
+	free_variable(data, tmp, input_address);
 	*input_address = new_input;
 	*i += len - 1;
 }

@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:45 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 18:21:56 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 03:01:07 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ void	handle_export(char **inputs, t_data *data)
 			else if (check_export(inputs[i]))
 				export_env_handle_env(data, inputs, i);
 			else
-			{
 				sentence_handle_export(data, inputs, i);
-				return ;
-			}
 			i++;
 		}
 	}

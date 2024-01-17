@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:41:02 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 20:31:23 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 01:44:09 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ambiguous_error(char *str, t_data *data)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] == ' ')
+	while (str[i] && str[i] != '>')
 		i++;
 	if (str[i] == '>')
 	{
@@ -89,31 +89,10 @@ int	parser_error(char *str, t_data *data)
 				return (1);
 			}
 			else if (error_redir(str, &i, str[i]))
-			{
-				if (!ambiguous_error(data->current_input, data))
-					return (1);
-				data->status = 2;
-				ft_putstr_fd("Error: wrong or unsupported redirection\n", 2);
-				return (1);
-			}
+				return (else_error_redir(data), 1);
 		}
 		else
 			i++;
-	}
-	return (0);
-}
-
-int	if_semi(char *str)
-{
-	if (str[0] == ';')
-	{
-		if (str[1] && str[1] == ';')
-			ft_putendl_fd("minishell: syntax error near unexpected token `;;'",
-				2);
-		else
-			ft_putendl_fd("minishell: syntax error near unexpected token `;'",
-				2);
-		return (1);
 	}
 	return (0);
 }

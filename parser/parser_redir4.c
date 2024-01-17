@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:40:20 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 17:40:20 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 00:15:40 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,8 @@ int	cmp_delim_input(char *delimiter, int fd_temp, t_data *data)
 		line = get_next_line(0);
 		if (!line)
 		{
-			free(line);
 			data->status = g_signal;
-			return (0);
+			return (free(line), 0);
 		}
 		if (!*line)
 			return (0);
@@ -99,19 +98,13 @@ int	redir_delimiter(char *str, char **input, int i, t_data *data)
 	temp_file = ".heredoc_tmp";
 	fd_temp = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd_temp < 0)
-	{
-		ft_putstr_fd("Error: Could not create temporary file", 2);
-		return (0);
-	}
+		return (ft_putstr_fd("Error: Could not create temporary file", 2), 0);
 	if (str[i + 2] == ' ')
 		delimiter = get_filename(&(str[i + 3]), &i);
 	else
 		delimiter = get_filename(&(str[i + 2]), &i);
 	if (cmp_delim_input(delimiter, fd_temp, data) == 0)
-	{
-		free(delimiter);
-		return (0);
-	}
+		return (free(delimiter), 0);
 	free(delimiter);
 	close(fd_temp);
 	modify_input(input, 0, temp_file, data);

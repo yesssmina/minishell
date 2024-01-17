@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 20:45:22 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 04:27:12 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_data
 	char	*current_input;
 
 	int		i_cleaner;
+	char	*var_value;
 }				t_data;
 
 extern int		g_signal;
@@ -88,7 +89,10 @@ void			free_inputs(char **inputs);
 void			close_fds(t_data *data);
 void			dup_close(int *oldfd, t_data *data);
 
+void			free_variable(t_data *data, char *tmp, char **input_ad);
+void			ft_var_value(t_data *data);
 char			**export_env(char **old_env, char *export);
+char			**ft_add_str_to_tab(char **tab2, char *new_str);
 void			handle_env(char **inputs, char **env, t_data *data);
 
 int				change_pwd(t_data *data, char *input);
@@ -160,6 +164,7 @@ int				redir_error_space(char *str, int i);
 int				if_semi(char *str);
 int				else_redir_error(char **input, int *i, t_data *data);
 int				else_redir_error2(char **input, int *i, t_data *data);
-
+void			else_error_redir(t_data *data);
+int				ambiguous_error(char *str, t_data *data);
 
 #endif

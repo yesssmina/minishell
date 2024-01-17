@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:40:30 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 17:40:32 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 01:16:40 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,7 @@ void	redir_from(char *str, int i, char **input, t_data *data)
 	if (data->fd_in != 0)
 		close(data->fd_in);
 	data->fd_in = fd;
-	if (ft_strncmp(filename, ".heredoc_tmp", ft_strlen(filename)) == 0)
-		unlink(".heredoc_tmp");
+	unlink(".heredoc_tmp");
 	parser_redir(input, data);
 }
 

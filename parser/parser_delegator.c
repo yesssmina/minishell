@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:41:33 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 20:43:56 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:47:09 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ int	parser_delegator(char *input, t_data *data, int piped)
 			}
 		}
 		if (check_special(&input, &i, data))
-		{
-			//free(input);
 			return (0);
-		}
 	}
 	return (handle_basic(input, data, piped));
 }
