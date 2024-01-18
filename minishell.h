@@ -6,28 +6,15 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/17 04:27:12 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 03:09:21 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <term.h>
-# include <curses.h>
-# include <termios.h>
-# include <stdint.h>
-# include <sys/ioctl.h>
-
-# include <stdlib.h>
-# include <unistd.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <errno.h>
-# include <signal.h>
-# include <dirent.h>
-
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft/libft.h"
@@ -67,6 +54,7 @@ typedef struct s_data
 
 	int		i_cleaner;
 	char	*var_value;
+	char	*cdpath;
 }				t_data;
 
 extern int		g_signal;

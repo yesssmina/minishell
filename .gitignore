@@ -1,6 +1,7 @@
 a.out
 *.o
 *.a*
+minishell
 
 .dSYM
 *.o
@@ -8,5 +9,8 @@ a.out
 
 /printfTester
 .DS_STORE
-.vs_code
+*.vs_code*
 venv/*
+
+*.vscode*
+*.config*

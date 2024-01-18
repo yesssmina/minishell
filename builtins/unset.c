@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/17 03:41:41 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/17 23:47:14 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**unset_env(char **old_env, int index)
 
 	i = 0;
 	j = 0;
-	puts("ici1");
 	new_env = malloc(sizeof(char *) * (envlen(old_env) - 1));
 	if (!new_env)
 		exit(EXIT_FAILURE);
