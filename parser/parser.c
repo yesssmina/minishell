@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:41:39 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 19:45:58 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:23:33 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,17 @@ int	parser_start(char *input, t_data *data)
 {
 	char	*clean_input;
 
+	if ((input[0] == '"' && input[1] == '"') || (input[0] == '\''
+			&& input[1] == '\''))
+	{
+		free(input);
+		return (error_sentence_exec("", 127, data), 0);
+	}
 	if (!ft_strncmp(input, "echo\\", 5))
 	{
 		input = input_cleaner(input, data);
 		error_sentence_exec(input, 127, data);
-		free(input);
-		return (0);
+		return (free(input), 0);
 	}
 	clean_input = input_cleaner(input, data);
 	if (clean_input == 0)
@@ -121,9 +126,6 @@ int	parser_start(char *input, t_data *data)
 		return (0);
 	}
 	if (!*clean_input)
-	{
-		free(clean_input);
-		return (0);
-	}
+		return (free(clean_input), 0);
 	return (parser_delegator(clean_input, data, 0));
 }
