@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:52 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 19:57:14 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 03:57:25 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,6 @@ void	error_sentence(char *str, int status, t_data *data)
 {
 	data->status = status;
 	ft_putstr_fd(str, 2);
-}
-
-void	error_sentence_exec(char *input, int status, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (var_index("PATH=", data) < 0 || (input[i] == '.'
-			&& input[i + 1] == '/'))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(input, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
-	else
-	{
-		if (input)
-		{
-			data->status = status;
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(input, 2);
-			ft_putstr_fd(": command not found\n", 2);
-		}
-	}
 }
 
 int	is_number(char *str)

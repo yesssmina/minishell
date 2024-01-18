@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:43:37 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/18 03:09:55 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 03:55:11 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	data_init(t_data *data, char **env)
 	data->succes_redir = 0;
 	data->current_input = NULL;
 	data->i_cleaner = 0;
+	data->flag_denied_perm = 0;
 }
 
 int	main(int ac, char **av, char **env)

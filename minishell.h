@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/18 03:09:21 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 03:55:29 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_data
 	int		i_cleaner;
 	char	*var_value;
 	char	*cdpath;
+	int		flag_denied_perm;
 }				t_data;
 
 extern int		g_signal;

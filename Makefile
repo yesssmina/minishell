@@ -11,7 +11,7 @@ SRCS	=	main.c	parser/parser_redir3.c \
 			parser/parser_error_redir.c parser/parser_error_redir2.c \
 			parser/parser_error_redir3.c builtins/signal_utils.c\
 			parser/handle_basic_utils.c parser/parser_delegator_utils.c \
-			parser/parser_error2.c parser/parser_variable2.c \
+			parser/parser_error2.c parser/parser_variable2.c builtins/exit_utils.c \
 
 OBJS	= $(SRCS:.c=.o)
 NAME	= minishell

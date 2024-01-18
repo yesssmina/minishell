@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:38:00 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 17:38:02 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 03:54:45 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ int	execute(char **inputs, t_data *data)
 	if (inputs[0][0] == '\0')
 		return (0);
 	error_sentence_exec(inputs[0], 127, data);
-	return (127);
+	if (data->flag_denied_perm == 1)
+		return (126);
+	else
+		return (127);
 }
 
 void	handle_exec(char **inputs, t_data *data)
