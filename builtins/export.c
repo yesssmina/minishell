@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:45 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/17 03:01:07 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 06:11:45 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void	handle_export(char **inputs, t_data *data)
 		while (inputs[i])
 		{
 			index = var_index(inputs[i], data);
-			if (index >= 0 && check_export(inputs[i]))
+			if (index >= 0 && check_export(inputs[i], data))
 				replace_var(inputs[i], data, index);
-			else if (check_export(inputs[i]))
+			else if (check_export(inputs[i], data))
 				export_env_handle_env(data, inputs, i);
 			else
 				sentence_handle_export(data, inputs, i);
@@ -111,5 +111,4 @@ void	handle_export(char **inputs, t_data *data)
 	}
 	else
 		export_alone(data);
-	data->status = 0;
 }

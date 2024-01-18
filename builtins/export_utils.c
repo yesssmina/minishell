@@ -6,28 +6,52 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:38 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/16 18:22:00 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 06:19:46 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_export(char *str)
+void	free_split(char **split)
 {
 	int	i;
 
 	i = 0;
-	if (str[0] == '\0')
-		return (0);
-	if (ft_isdigit(str[i]))
-		return (0);
-	while (str[i] && str[i] != '=')
+	while (split[i] != NULL)
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
+		free(split[i]);
 		i++;
 	}
-	return (1);
+	free(split);
+}
+
+int	check_export(char *str, t_data *data)
+{
+	char	**split;
+
+	data->index_i = 0;
+	if (str[0] == '\0')
+		return (0);
+	if (ft_isdigit(str[data->index_i]))
+		return (0);
+	while (str[data->index_i] && str[data->index_i] != '=')
+	{
+		if (!ft_isalnum(str[data->index_i]) && str[data->index_i] != '_')
+			return (0);
+		data->index_i++;
+	}
+	split = ft_split(data->current_input, '=');
+	if (str[data->index_i] == '=')
+	{
+		data->index = var_index(str, data);
+		if (data->index != -1)
+		{
+			if (ft_strchr(data->env[data->index], '=') != NULL
+				&& ft_strchr(split[0], '$') != NULL)
+				return (free_split(split), 0);
+		}
+	}
+	return (free_split(split), 1);
 }
 
 int	print_export(char **env)
@@ -64,6 +88,7 @@ void	sentence_handle_export(t_data *data, char **inputs, int i)
 	ft_putstr_fd("minishell: export: '", 1);
 	ft_putstr_fd(inputs[i], 1);
 	error_sentence("': not a valid identifier\n", 1, data);
+	data->status = 1;
 }
 
 void	export_env_handle_env(t_data *data, char **inputs, int i)

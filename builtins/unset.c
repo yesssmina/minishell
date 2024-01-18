@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:37:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/17 23:47:14 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 05:48:29 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	handle_unset(char **inputs, t_data *data)
 	i = 1;
 	while (inputs[i])
 	{
-		if (check_export(inputs[i]))
+		if (check_export(inputs[i], data))
 		{
 			index = var_index(inputs[i], data);
 			if (index > 0 && !ft_strchr(inputs[i], '='))

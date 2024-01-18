@@ -6,7 +6,7 @@
 /*   By: sannagar <sannagar@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 17:45:05 by sannagar          #+#    #+#             */
-/*   Updated: 2024/01/18 03:55:29 by sannagar         ###   ########.fr       */
+/*   Updated: 2024/01/18 06:19:58 by sannagar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_data
 	char	*var_value;
 	char	*cdpath;
 	int		flag_denied_perm;
+	int		index_i;
+	int		index;
 }				t_data;
 
 extern int		g_signal;
@@ -96,7 +98,7 @@ void			handle_sig(int sig);
 void			replace_var(char *new_var, t_data *data, int index);
 int				var_index(char *name, t_data *data);
 int				print_export(char **env);
-int				check_export(char *str);
+int				check_export(char *str, t_data *data);
 char			**copy_export_env(char **env);
 void			handle_export(char **args, t_data *data);
 void			export_env_handle_env(t_data *data, char **inputs, int i);
