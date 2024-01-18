@@ -11,7 +11,7 @@ SRCS	=	main.c	parser/parser_redir3.c \
 			parser/parser_error_redir.c parser/parser_error_redir2.c \
 			parser/parser_error_redir3.c builtins/signal_utils.c\
 			parser/handle_basic_utils.c parser/parser_delegator_utils.c \
-			parser/parser_error2.c parser/parser_variable2.c builtins/exit_utils.c \
+			parser/parser_error2.c parser/parser_variable2.c builtins/exit_utils.c\
 
 OBJS	= $(SRCS:.c=.o)
 NAME	= minishell
@@ -22,7 +22,14 @@ FLAGS	= -Wall -Wextra -Werror -g3
 INCLUDE	= -L libft -lft
 READLINE_FLAGS = -lreadline -I /usr/include/readline
 
-all:	$(NAME)
+all:
+	@echo "\033[1;30mif compilation fails, make sure you have readline installed on your system.\033[0m" 
+	@echo "\033[1;30mOn Debian/Ubuntu:\033[0m" 
+	@echo "\033[1;30msudo apt-get install libreadline-dev\033[0m" 
+	@echo "\033[1;30mOn macOS:\033[0m" 
+	@echo "\033[1;30mbrew install readline\033[0m" 
+	@echo "\n\033[1;34mCompilation is in progress...\033[0m\n"
+	@make -s $(NAME)
 
 %.o: %.c
 	@printf "\033[KCompiling: $<\r"
